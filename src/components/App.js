@@ -4,17 +4,40 @@ import LeaderboardPage from "./LeaderboardPage";
 import PuzzlePage from "./PuzzlePage";
 import ShopPage from "./ShopPage";
 import randomInteger from "random-int";
+import randomItem from 'random-item';
 
 function App() {
   const [puzzle, setPuzzle] = useState(null);
+  const [unusedIds, setUnusedIds] = useState([]);
 
-  useEffect(() => {
-    fetch(`http://localhost:3000/puzzles/${randomInteger(1,150)}`)
+
+  function getPuzzle(override = randomItem(unusedIds)) {
+    fetch(`http://localhost:3000/puzzles/${override}`)
     .then(r => r.json())
-    .then(json => console.log(json));
-  },[])
+    .then(json => {
+      setPuzzle({
+      string: json.string,
+      array: json.array,
+      category: json.category,
+      value: null,
+      revealed: json.array.map(cv => cv === " " ? null : false),
+      guesses: {},
+      strikes: 0,
+      lifesavers: null,
+      rapidInputs: null
+    })
+    setUnusedIds(current => [...current].filter(cv => cv !== json.id));
+  });
+  }
 
   console.log(puzzle);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/puzzles')
+    .then(r => r.json())
+    .then(json => setUnusedIds(json.map(cv => cv.id)));
+    getPuzzle(randomInteger(1,150));
+  },[])
 
   return (
     <div className="App">
@@ -32,7 +55,6 @@ function App() {
       <Route exact path="/leaderboard">
         <LeaderboardPage />
       </Route>
-      <button onClick={() => setPuzzle(randomInteger(5))}>Rerender</button>
     </div>
   );
 }
