@@ -18,6 +18,7 @@ function App() {
           Learn React
         </a>
       </header>
+      <h1>{process.env.REACT_APP_URL}</h1>
     </div>
   );
 }
