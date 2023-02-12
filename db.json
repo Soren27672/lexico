@@ -1864,7 +1864,7 @@
         "E",
         "E"
       ],
-      "category": "nature",
+      "category": "Nature",
       "id": 80
     },
     {
@@ -1879,7 +1879,7 @@
         "A",
         "D"
       ],
-      "category": "nature",
+      "category": "Nature",
       "id": 81
     },
     {
@@ -1892,7 +1892,7 @@
         "U",
         "S"
       ],
-      "category": "nature",
+      "category": "Nature",
       "id": 82
     },
     {
@@ -1911,7 +1911,7 @@
         "E",
         "E"
       ],
-      "category": "nature",
+      "category": "Nature",
       "id": 83
     },
     {
@@ -1925,7 +1925,7 @@
         "I",
         "L"
       ],
-      "category": "nature",
+      "category": "Nature",
       "id": 84
     },
     {
@@ -1940,7 +1940,7 @@
         "T",
         "O"
       ],
-      "category": "nature",
+      "category": "Nature",
       "id": 85
     },
     {
@@ -1957,7 +1957,7 @@
         "O",
         "N"
       ],
-      "category": "nature",
+      "category": "Nature",
       "id": 86
     },
     {
@@ -1973,7 +1973,7 @@
         "O",
         "N"
       ],
-      "category": "nature",
+      "category": "Nature",
       "id": 87
     },
     {
@@ -1988,7 +1988,7 @@
         "E",
         "L"
       ],
-      "category": "nature",
+      "category": "Nature",
       "id": 88
     },
     {
@@ -3322,7 +3322,7 @@
       "id": 139
     },
     {
-      "string": "NATURE VERSUS NURTURE",
+      "string": "Nature VERSUS NURTURE",
       "array": [
         "N",
         "A",

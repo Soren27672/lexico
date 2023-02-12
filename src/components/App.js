@@ -39,6 +39,8 @@ function App() {
     getPuzzle(randomInteger(1,150));
   },[])
 
+  if(puzzle === null) return <h1>Loading!</h1>
+
   return (
     <div className="App">
       <nav>
@@ -47,7 +49,7 @@ function App() {
         <NavLink to="/leaderboard">Rank!</NavLink>
       </nav>
       <Route exact path="/puzzle">
-        <PuzzlePage />
+        <PuzzlePage puzzleData={puzzle}/>
       </Route>
       <Route exact path="/shop">
         <ShopPage />

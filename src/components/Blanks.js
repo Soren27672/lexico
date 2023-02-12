@@ -1,9 +1,9 @@
 import React from "react";
 
-function Blanks() {
+function Blanks({ string }) {
 
     return (
-        <></>
+        <h1>{string}</h1>
     )
 }
 
