@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, Route } from "react-router-dom";
 import LeaderboardPage from "./LeaderboardPage";
 import PuzzlePage from "./PuzzlePage";
 import ShopPage from "./ShopPage";
+import randomInteger from "random-int";
 
 function App() {
+  const [puzzle, setPuzzle] = useState(null);
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/puzzles/${randomInteger(1,150)}`)
+    .then(r => r.json())
+    .then(json => console.log(json));
+  },[])
+
+  console.log(puzzle);
+
   return (
     <div className="App">
       <nav>
@@ -21,6 +32,7 @@ function App() {
       <Route exact path="/leaderboard">
         <LeaderboardPage />
       </Route>
+      <button onClick={() => setPuzzle(randomInteger(5))}>Rerender</button>
     </div>
   );
 }
@@ -29,6 +41,8 @@ export default App;
 
 
 /*
+
+${process.env.REACT_APP_URL}/puzzles/${randomInteger(1,150)}
 
 
 App
