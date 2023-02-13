@@ -5,7 +5,7 @@ import Thumbnail from "./Thumbnail";
 import Value from "./Value";
 
 function PuzzlePage({ puzzleData, setPuzzleData }) {
-    const { category, array, revealed, value } = puzzleData;
+    const { category, array, revealed, value, guesses } = puzzleData;
     const div = useRef();
 
     function handleGuess(e) {
@@ -64,7 +64,7 @@ function PuzzlePage({ puzzleData, setPuzzleData }) {
             <small>{ category }</small>
             <Blanks array={array} revealedArray={revealed}/>
             <Value value={value}/>
-            <Strikes />
+            <Strikes guesses={guesses}/>
             <div id="thumbnails">
                 <Thumbnail />
                 <Thumbnail />

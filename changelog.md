@@ -1,5 +1,10 @@
 # Changelog
 
+
+### 9
+- Created function generateIncorrect() in Strikes.js that takes an object of guesses and returns a string representing the previously guessed incorrect letters
+
+
 ### 8
 - Created function generateBlanks() in Blanks.js that takes an array of letters and a revealed array and returns a string of blanks and letters that reflects the provided word and the current correct guesses
 

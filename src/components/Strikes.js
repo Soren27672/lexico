@@ -1,9 +1,17 @@
 import React from "react";
 
-function Strikes() {
+function Strikes({ guesses }) {
+
+    function generateIncorrect(guesses) {
+        let returnString = '  ';
+        for (const guess in guesses) {
+            if (!guesses[guess]) returnString += `${guess}  `;
+        }
+        return returnString;
+    }
 
     return (
-        <p>Incorrect guesses</p>
+        <p>{generateIncorrect(guesses)}</p>
     )
 }
 
