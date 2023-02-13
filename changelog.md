@@ -1,5 +1,9 @@
 # Changelog
 
+### 8
+- Created function generateBlanks() in Blanks.js that takes an array of letters and a revealed array and returns a string of blanks and letters that reflects the provided word and the current correct guesses
+
+
 ### 7
 - Added handleGuess() function to PuzzlePage which detects non-letter characters, correct guesses, and incorrect guesses before executing a desired piece of code
     - handleGuess() detects invalid characters by first checking that they are one character long, then by checking that they are not the same uppercase and lowercase, if both tests pass, the program moves on to detecting if the guess was correct or not

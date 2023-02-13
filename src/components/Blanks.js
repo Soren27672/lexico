@@ -1,10 +1,16 @@
 import React from "react";
 
-function Blanks({ string }) {
+function Blanks({ array, revealedArray }) {
 
-    return (
-        <h1>{string}</h1>
-    )
+    function generateBlanks(array, revealedArray) {
+        return array.reduce((ac,letter,index) => {
+            if (revealedArray[index] === true) return ac + `${letter} `;
+            if (revealedArray[index] === false) return ac + `_ `;
+            if (revealedArray[index] === null) return ac + `   `;
+        }, '')
+    }
+
+    return <h1>{generateBlanks(array,revealedArray)}</h1>;
 }
 
 export default Blanks;
