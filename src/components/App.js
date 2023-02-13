@@ -90,7 +90,10 @@ function App() {
         <NavLink to="/leaderboard">Rank!</NavLink>
       </nav>
       <Route exact path="/puzzle">
-        <PuzzlePage puzzleData={puzzle} setPuzzleData={setPuzzle}/>
+        <PuzzlePage
+        puzzleData={puzzle}
+        setPuzzleData={setPuzzle}
+        newPuzzle={getPuzzle}/>
       </Route>
       <Route exact path="/shop">
         <ShopPage />

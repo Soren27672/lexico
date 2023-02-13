@@ -1,6 +1,12 @@
 # Changelog
 
 
+### 11
+- PuzzlePage now conditionally renders a "Next Puzzle" button when puzzleData.completed is true
+    - This button's onClick event accepts a callback function passed to the prop ```newPuzzle```
+    - Currently, the function getPuzzle() from App.js is passed to newPuzzle
+
+
 ### 10
 - handleGuess() now detects if the puzzle has been completely solved, setting the property ```completed``` to true if there are no false values in ```revealed```
 

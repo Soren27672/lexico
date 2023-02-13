@@ -4,8 +4,8 @@ import Strikes from "./Strikes";
 import Thumbnail from "./Thumbnail";
 import Value from "./Value";
 
-function PuzzlePage({ puzzleData, setPuzzleData }) {
-    const { category, array, revealed, value, guesses } = puzzleData;
+function PuzzlePage({ puzzleData, setPuzzleData, newPuzzle }) {
+    const { category, array, revealed, value, guesses, completed } = puzzleData;
     const div = useRef();
 
     function handleGuess(e) {
@@ -71,6 +71,7 @@ function PuzzlePage({ puzzleData, setPuzzleData }) {
             <Blanks array={array} revealedArray={revealed}/>
             <Value value={value}/>
             <Strikes guesses={guesses}/>
+            {completed ? <button onClick={newPuzzle}>Next Puzzle!</button> : null}
             <div id="thumbnails">
                 <Thumbnail />
                 <Thumbnail />
