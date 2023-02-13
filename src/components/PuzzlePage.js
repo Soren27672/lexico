@@ -1,11 +1,13 @@
-import React, { useRef, useEffect } from "react";
+import formatDuration from "format-duration";
+import React, { useRef, useEffect, useState } from "react";
 import Blanks from "./Blanks";
 import Strikes from "./Strikes";
 import Thumbnail from "./Thumbnail";
 import Value from "./Value";
 
-function PuzzlePage({ puzzleData, setPuzzleData, newPuzzle, puzzleCompleted, userData }) {
-    const { category, array, revealed, value, guesses, completed } = puzzleData;
+function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle, pageClosed, userData, initialized, setInitialized }) {
+    const [ puzzleData, setPuzzleData ] = useState({...puzzleObj});
+    const [ sessionInterval, setSessionInterval ] = useState(null);
     const div = useRef();
 
     function handleGuess(e) {
@@ -38,21 +40,13 @@ function PuzzlePage({ puzzleData, setPuzzleData, newPuzzle, puzzleCompleted, use
         }
 
         setPuzzleData(current => {
+            const newRevealed = current.revealed.map((blank,index) => {
+                return current.array[index] === guess ? true : blank
+            })
             return {...current,
-                revealed: current.revealed.map((blank,subIndex) => {
-                    return current.array[subIndex] === guess ? true : blank
-                }),
+                revealed: newRevealed,
                 guesses: {...(current.guesses), [guess]: true}
             }
-        });
-
-        setPuzzleData(current => {
-            for (const letter of current.revealed) {
-                if (letter === false) return {...current}
-            }
-
-            puzzleCompleted(current.finalValue);
-            return {...current, completed: true}
         });
 
     }
@@ -62,7 +56,6 @@ function PuzzlePage({ puzzleData, setPuzzleData, newPuzzle, puzzleCompleted, use
     }
 
     function calculateFinalValue({ value, strikes, rapidInput, array }) {
-        console.log(value, strikes, rapidInput, array)
         let returnValue = value;
         
         if (strikes > 0) {
@@ -82,8 +75,6 @@ function PuzzlePage({ puzzleData, setPuzzleData, newPuzzle, puzzleCompleted, use
             returnValue = returnValue * (userData.bonusData.rapidInput.value ** rapidInput);
          }
 
-         console.log(returnValue);
-
          return returnValue;
     }
 
@@ -91,22 +82,67 @@ function PuzzlePage({ puzzleData, setPuzzleData, newPuzzle, puzzleCompleted, use
         let i = 0;
         for (const key in object) {
             if (object[key] === value) ++i;
-            console.log(object,key,value,object[key] === value,i)
         }
         return i;
     }
 
     useEffect(focus,[])
 
+    useEffect(() => {
+        handlePuzzleUpdated(puzzleData);
+
+        const lettersRemaining = puzzleData.revealed.filter(blank => blank === false).length;
+
+        if ((lettersRemaining === 0) && (puzzleData.completed === false)) {
+            setPuzzleData(current => {
+                return {...current,
+                    completed: true
+                }
+            })
+        }
+
+        if ((puzzleData.completed) && (puzzleData.completedRan === false)) {
+            clearInterval(sessionInterval);
+            handleCompleted();
+            setPuzzleData(current => {
+                return {...current,
+                    completedRan: true
+                }
+            })
+        }
+
+    },[puzzleData])
+
+    useEffect(() => {
+        if (initialized === false) {
+            setPuzzleData({ ...puzzleObj});
+            setInitialized(true);
+            
+            const interval = setInterval(() => {
+                setPuzzleData(currentPuzzle => {
+                    return {...currentPuzzle,
+                        time: currentPuzzle.time + 1000
+                    }
+                })
+            },1000)
+    
+            setSessionInterval(interval);
+    
+            return () => {
+                clearInterval(sessionInterval);
+                pageClosed();
+            };
+        }
+    },)
+
     return (
         <div ref={div} id="puzzle-page" onKeyDown={handleGuess} tabIndex={-1}>
-            <small>{ category }</small>
-            <Blanks array={array} revealedArray={revealed}/>
-            <Value puzzleData={puzzleData}
-            setPuzzleData={setPuzzleData}
-            userData={userData}/>
-            <Strikes guesses={guesses}/>
-            {completed ? <button onClick={newPuzzle}>Next Puzzle!</button> : null}
+            <small>{ puzzleData.category }</small>
+            <Blanks array={puzzleData.array} revealedArray={puzzleData.revealed}/>
+            <Value puzzleData={puzzleData}/>
+            <Strikes guesses={puzzleData.guesses}/>
+            <p>{`Time: ${formatDuration(puzzleData.time)}`}</p>
+            {puzzleData.completed ? <button onClick={newPuzzle}>Next Puzzle!</button> : null}
             <div id="thumbnails">
                 <Thumbnail />
                 <Thumbnail />

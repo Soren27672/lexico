@@ -5,6 +5,7 @@ import PuzzlePage from "./PuzzlePage";
 import ShopPage from "./ShopPage";
 import randomInteger from "random-int";
 import randomItem from 'random-item';
+import formatDuration from "format-duration";
 
 function App() {
   const [initialized, setInitialized] = useState({
@@ -12,6 +13,7 @@ function App() {
     initializedGameData: false
   });
   const [puzzle, setPuzzle] = useState(null);
+  const [puzzleInitialized, setPuzzleInitialized] = useState(false);
   const [unusedIds, setUnusedIds] = useState([]);
   const [gameData, setGameData] = useState({});
   const [userData, setUserData] = useState({
@@ -73,8 +75,11 @@ function App() {
       strikes: 0,
       lifesavers: null,
       rapidInputs: null,
+      time: 0,
       completed: false,
+      completedRan: false
     })
+    setPuzzleInitialized(false);
     setUnusedIds(current => [...current].filter(cv => cv !== json.id));
   });
   }
@@ -87,15 +92,20 @@ function App() {
     return base + Math.ceil(averageValue * coefficient);
   }
 
-  function puzzleCompleted(value) {
+  function puzzleCompleted() {
     setUserData(data => {
       return {...data,
         points: {...data.points,
-          gross: data.points.gross + value,
-          net: data.points.gross + value - data.points.spent
-        }
+          gross: data.points.gross + puzzle.finalValue,
+          net: data.points.gross + puzzle.finalValue - data.points.spent
+        },
+        time: data.time + puzzle.time
       }
     })
+  }
+
+  function updatePuzzle(puzzleObj) {
+    setPuzzle({...puzzleObj});
   }
 
   useEffect(initialRender,[]);
@@ -108,14 +118,14 @@ function App() {
   },[initialized])
 
   useEffect(() => {
-    console.log(puzzle);
+    //console.log(puzzle);
   },[puzzle])
 
   if(puzzle === null) return <h1>Loading!</h1>
 
   return (
     <div className="App">
-      <p>{`Points: ${userData.points.net}`}</p>
+      <p>{`Points: ${userData.points.net}, Time: ${formatDuration(userData.time)}`}</p>
       <nav>
         <NavLink to="/puzzle">Play!</NavLink>
         <NavLink to="/shop">Upgrade!</NavLink>
@@ -123,11 +133,14 @@ function App() {
       </nav>
       <Route exact path="/puzzle">
         <PuzzlePage
-        puzzleData={puzzle}
-        setPuzzleData={setPuzzle}
+        puzzleObj={puzzle}
+        handlePuzzleUpdated={updatePuzzle}
         newPuzzle={getPuzzle}
-        puzzleCompleted={puzzleCompleted}
-        userData={userData}/>
+        handleCompleted={puzzleCompleted}
+        pageClosed={() => console.log('hello')}
+        userData={userData}
+        initialized={puzzleInitialized}
+        setInitialized={setPuzzleInitialized}/>
       </Route>
       <Route exact path="/shop">
         <ShopPage />

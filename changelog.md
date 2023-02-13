@@ -1,6 +1,18 @@
 # Changelog
 
 
+### 14
+- Refactored PuzzlePage so that it handles it has a more logical role for itself
+    - Instead of recieving a setter function as a prop to change state of a puzzle object in a different component, it now houses a puzzle object in its own state, which can be accessed by functions passed to it
+        - The new prop ```handlePuzzleUpdated``` expects a function and invokes it with PuzzlePage's stateful puzzle object as an argument whenever PuzzlePage's stateful puzzle object is updated
+        - This allows PuzzlePage to export the progress/results of its game to its parent without directly modifying an external piece of state that it had to be passed
+    - Upon rendering, PuzzlePage is passed a puzzleObj that it uses to create its own stateful puzzle object
+        - PuzzlePage only updates its state to match its passed puzzleObj when its ```initialized``` prop is false
+        - When the ```initialized``` prop is false, PuzzlePage's state is updated to match the passed puzzleObj, after which it invokes the ```setInitialized``` prop with false as its argument
+    - Upon initializing a puzzle, PuzzlePage sets an interval that increments the time property of puzzleData by 1000 every second
+        - This interval's id is stored in state and cleared whenver the component is unmounted or a puzzle is completed (need to resume interval when puzzle page is returned to)
+
+
 ### 13
 - Puzzle objects now have a finalValue property, which holds the point value of the puzzle after all modifications such as strikes and bonuses have been accounted
 - The function calculateFinalValue() is now present in PuzzlePage
