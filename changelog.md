@@ -1,6 +1,10 @@
 # Changelog
 
 
+### 10
+- handleGuess() now detects if the puzzle has been completely solved, setting the property ```completed``` to true if there are no false values in ```revealed```
+
+
 ### 9
 - Created function generateIncorrect() in Strikes.js that takes an object of guesses and returns a string representing the previously guessed incorrect letters
 

@@ -52,7 +52,8 @@ function App() {
       guesses: {},
       strikes: 0,
       lifesavers: null,
-      rapidInputs: null
+      rapidInputs: null,
+      completed: false,
     })
     setUnusedIds(current => [...current].filter(cv => cv !== json.id));
   });
@@ -107,7 +108,8 @@ function App() {
           guesses: {},
           strikes: 0,
           lifesavers: null,
-          rapidInputs: null
+          rapidInputs: null,
+          completed: false
         })
         }}>Set to Q</button>
       <button onClick={() =>{
@@ -120,7 +122,8 @@ function App() {
           guesses: {},
           strikes: 0,
           lifesavers: null,
-          rapidInputs: null
+          rapidInputs: null,
+          completed: false
         })
         }}>Set to E</button>
     </div>

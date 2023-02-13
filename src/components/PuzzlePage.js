@@ -40,7 +40,13 @@ function PuzzlePage({ puzzleData, setPuzzleData }) {
                 guesses: {...(current.guesses), [guess]: true}
             }
         });
-        return;
+
+        setPuzzleData(current => {
+            for (const letter of current.revealed) {
+                if (letter === false) return {...current}
+            }
+            return {...current, completed: true}
+        });
 
     }
 
