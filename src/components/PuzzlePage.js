@@ -5,13 +5,13 @@ import Thumbnail from "./Thumbnail";
 import Value from "./Value";
 
 function PuzzlePage({ puzzleData }) {
-    const { category, string } = puzzleData;
+    const { category, string, value } = puzzleData;
 
     return (
         <div id="puzzle-page">
             <small>{ category }</small>
             <Blanks string={string}/>
-            <Value />
+            <Value value={value}/>
             <Strikes />
             <div id="thumbnails">
                 <Thumbnail />

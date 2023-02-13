@@ -1,5 +1,16 @@
 # Changelog
 
+## 5
+- Upon the initial render, App makes two fetch requests, one to retrieve the list of puzzles so that it can create the unusedArray, and a second to retrieve the gameData object
+    - It is also desired to retrieve a puzzle upon initially rendering, but in order to retrieve a puzzle and prepare it for its client-side functionality, the program must wait until the gameData object is retrieved, because that is where data such as the value of each letter is stored, which is needed to store the value of the puzzle within the client-side puzzle object
+    - (it is not ideal to store the value of the puzzle within the puzzle's object in the backend, because then, the client is no longer capable of manipulating its own game data to create special-case game modifications. It is the server's responsibility to provide puzzles, and it is the client's responsibility to run the game in any manner necessary)
+    - This wait is achieved by creating an ```initialized``` state, which is an object that contains several processes as properties and a boolean of whether or not they have run as their values
+    - When ```initialized``` is updated, a useEffect callback is run, detecting whether all properties of ```initialized``` are true before fetching the puzzle object
+    - Now that the two preconditions have been run, the puzzle object can be properly filled with value data
+- Introduced calculateValue(), which takes an array of letters, a base value and a coefficient that normalizes a letter's frequency value between 1 and 57 to the desired point variance between easy and hard puzzles (1-200), and returns the difficulty value of the provided array of letters
+- The Value component now displays a puzzle's value
+
+
 ## 4
 - Created skeleton for puzzle page which loads dummy components
 - Created Thumbnail component which currently just displays the text "thum"

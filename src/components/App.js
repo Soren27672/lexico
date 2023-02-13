@@ -7,19 +7,47 @@ import randomInteger from "random-int";
 import randomItem from 'random-item';
 
 function App() {
+  const [initialized, setInitialized] = useState({
+    initializedUnusedIds: false,
+    initializedGameData: false
+  });
   const [puzzle, setPuzzle] = useState(null);
   const [unusedIds, setUnusedIds] = useState([]);
+  const [gameData, setGameData] = useState({});
 
+  function initialRender(){
+    fetch('http://localhost:3000/puzzles')
+    .then(r => r.json())
+    .then(json => {
+      setUnusedIds(json.map(cv => cv.id));
+      setInitialized(current => {
+        return {...current, initializedUnusedIds: true}
+      });
+    });
 
-  function getPuzzle(override = randomItem(unusedIds)) {
-    fetch(`http://localhost:3000/puzzles/${override}`)
+    fetch('http://localhost:3000/gameData')
+    .then(r => r.json())
+    .then(json => {
+      setGameData({...json, 
+        valueData: {...(json.valueData),
+          coefficient: json.valueData.variance / json.valueData.maxLetterValue
+        }
+      })
+      setInitialized(current => {
+        return {...current, initializedGameData: true}
+      });
+    })
+  }
+
+  function getPuzzle() {
+    fetch(`http://localhost:3000/puzzles/${randomItem(unusedIds)}`)
     .then(r => r.json())
     .then(json => {
       setPuzzle({
       string: json.string,
       array: json.array,
       category: json.category,
-      value: null,
+      value: calculateValue(json.array,gameData.valueData.base,gameData.valueData.coefficient),
       revealed: json.array.map(cv => cv === " " ? null : false),
       guesses: {},
       strikes: 0,
@@ -30,14 +58,24 @@ function App() {
   });
   }
 
-  console.log(puzzle);
+  function calculateValue(lettersArray,base,coefficient) {
+    console.log(lettersArray,base,coefficient);
+    const lettersOnly = lettersArray.filter(letter => letter !== ' ');
+    const letterValueSum = lettersOnly.reduce((ac,letter) => ac + gameData.valueData[letter], gameData.valueData[lettersOnly[0]]);
+    const averageValue = letterValueSum / lettersOnly.length;
+
+    return base + Math.ceil(averageValue * coefficient);
+  }
+
+  useEffect(initialRender,[]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/puzzles')
-    .then(r => r.json())
-    .then(json => setUnusedIds(json.map(cv => cv.id)));
-    getPuzzle(randomInteger(1,150));
-  },[])
+    console.log('initialized was changed', initialized)
+    for(const key in initialized) {
+      if(!initialized[key]) return;
+    }
+    getPuzzle();
+  },[initialized])
 
   if(puzzle === null) return <h1>Loading!</h1>
 

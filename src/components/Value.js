@@ -1,9 +1,9 @@
 import React from "react";
 
-function Value() {
+function Value({ value }) {
 
     return (
-        <p>Value</p>
+        <p>{value}</p>
     )
 }
 
