@@ -69,12 +69,15 @@ function App() {
   useEffect(initialRender,[]);
 
   useEffect(() => {
-    console.log('initialized was changed', initialized)
     for(const key in initialized) {
       if(!initialized[key]) return;
     }
     getPuzzle();
   },[initialized])
+
+  useEffect(() => {
+    console.log(puzzle);
+  },[puzzle])
 
   if(puzzle === null) return <h1>Loading!</h1>
 
@@ -86,7 +89,7 @@ function App() {
         <NavLink to="/leaderboard">Rank!</NavLink>
       </nav>
       <Route exact path="/puzzle">
-        <PuzzlePage puzzleData={puzzle}/>
+        <PuzzlePage puzzleData={puzzle} setPuzzleData={setPuzzle}/>
       </Route>
       <Route exact path="/shop">
         <ShopPage />

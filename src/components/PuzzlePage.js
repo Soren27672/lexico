@@ -4,17 +4,57 @@ import Strikes from "./Strikes";
 import Thumbnail from "./Thumbnail";
 import Value from "./Value";
 
-function PuzzlePage({ puzzleData }) {
+function PuzzlePage({ puzzleData, setPuzzleData }) {
     const { category, string, value } = puzzleData;
     const div = useRef();
-    console.log(div.current);
 
     function handleGuess(e) {
-        console.log(e.key);
+        if ((e.key.length !== 1) || (e.key.toLowerCase() === e.key.toUpperCase())) {
+            console.log('Invalid Character');
+            return
+        }
+
+        let correct = false;
+        const guess = e.key.toUpperCase();
+        for (const index in puzzleData.array) {
+            if(puzzleData.array[index] === guess) {
+                correct = true;
+            }    
+        }
+
+        if (!correct) {
+            setPuzzleData(current => {
+                return {...current,
+                    guesses: {...(current.guesses), [guess]: false},
+                    strikes: instancesOfValueInObject({...(current.guesses), [guess]: false},false)
+                }
+            })
+            return;
+        }
+
+        setPuzzleData(current => {
+            return {...current,
+                revealed: current.revealed.map((blank,subIndex) => {
+                    return current.array[subIndex] === guess ? true : blank
+                }),
+                guesses: {...(current.guesses), [guess]: true}
+            }
+        });
+        return;
+
     }
 
     function focus() {
         div.current.focus();
+    }
+
+    function instancesOfValueInObject(object, value) {
+        let i = 0;
+        for (const key in object) {
+            if (object[key] === value) ++i;
+            console.log(object,key,value,object[key] === value,i)
+        }
+        return i;
     }
 
     useEffect(focus,[])
