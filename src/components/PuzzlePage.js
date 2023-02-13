@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import Blanks from "./Blanks";
 import Strikes from "./Strikes";
 import Thumbnail from "./Thumbnail";
@@ -6,9 +6,21 @@ import Value from "./Value";
 
 function PuzzlePage({ puzzleData }) {
     const { category, string, value } = puzzleData;
+    const div = useRef();
+    console.log(div.current);
+
+    function handleGuess(e) {
+        console.log(e.key);
+    }
+
+    function focus() {
+        div.current.focus();
+    }
+
+    useEffect(focus,[])
 
     return (
-        <div id="puzzle-page">
+        <div ref={div} id="puzzle-page" onKeyDown={handleGuess} tabIndex={-1}>
             <small>{ category }</small>
             <Blanks string={string}/>
             <Value value={value}/>

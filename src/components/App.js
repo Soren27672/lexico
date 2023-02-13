@@ -59,9 +59,8 @@ function App() {
   }
 
   function calculateValue(lettersArray,base,coefficient) {
-    console.log(lettersArray,base,coefficient);
     const lettersOnly = lettersArray.filter(letter => letter !== ' ');
-    const letterValueSum = lettersOnly.reduce((ac,letter) => ac + gameData.valueData[letter], gameData.valueData[lettersOnly[0]]);
+    const letterValueSum = lettersOnly.reduce((ac,letter) => ac + gameData.valueData[letter],0);
     const averageValue = letterValueSum / lettersOnly.length;
 
     return base + Math.ceil(averageValue * coefficient);
@@ -95,6 +94,32 @@ function App() {
       <Route exact path="/leaderboard">
         <LeaderboardPage />
       </Route>
+      <button onClick={() =>{
+        setPuzzle({
+          string: 'Q',
+          array: ['Q'],
+          category: 'Test',
+          value: calculateValue(['Q'],gameData.valueData.base,gameData.valueData.coefficient),
+          revealed: [false],
+          guesses: {},
+          strikes: 0,
+          lifesavers: null,
+          rapidInputs: null
+        })
+        }}>Set to Q</button>
+      <button onClick={() =>{
+        setPuzzle({
+          string: 'E',
+          array: ['E'],
+          category: 'Test',
+          value: calculateValue(['E'],gameData.valueData.base,gameData.valueData.coefficient),
+          revealed: [false],
+          guesses: {},
+          strikes: 0,
+          lifesavers: null,
+          rapidInputs: null
+        })
+        }}>Set to E</button>
     </div>
   );
 }

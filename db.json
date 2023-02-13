@@ -3,7 +3,7 @@
     "valueData": {
       "base": 50,
       "strike": 50,
-      "variance": 200,
+      "variance": 350,
       "maxLetterValue": 57,
       "A": 15,
       "B": 47,

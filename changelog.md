@@ -1,5 +1,12 @@
 # Changelog
 
+### 6
+- Fixed bug with calculateValue
+    - reduce method previously had it's initial value set to the point value of the first letter, which resulted in inaccurate scores
+    - initial value is now set to zero
+- PuzzlePage's parent div has been given an onKeyDown event and is now automatically focused when the user opens the PuzzlePage
+    - This is accomplished by accessing the real DOM element thru useRef and then calling the focus() method on it in a useEffect that runs when the component is first rendered
+
 ## 5
 - Upon the initial render, App makes two fetch requests, one to retrieve the list of puzzles so that it can create the unusedArray, and a second to retrieve the gameData object
     - It is also desired to retrieve a puzzle upon initially rendering, but in order to retrieve a puzzle and prepare it for its client-side functionality, the program must wait until the gameData object is retrieved, because that is where data such as the value of each letter is stored, which is needed to store the value of the puzzle within the client-side puzzle object
