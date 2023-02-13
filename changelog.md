@@ -1,6 +1,14 @@
 # Changelog
 
 
+### 13
+- Puzzle objects now have a finalValue property, which holds the point value of the puzzle after all modifications such as strikes and bonuses have been accounted
+- The function calculateFinalValue() is now present in PuzzlePage
+    - The function takes a puzzle object and returns the final value of the puzzle after all modifications
+    - calculateFinalValue is now called when an incorrect guess is registered, and will be called in the future whenever a new final value needs to be displayed
+- Value component now displays intial value, strikes and final value
+
+
 ### 12
 - Created userData object in state in App.js
     - Holds data about the user's current points

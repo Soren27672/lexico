@@ -67,6 +67,7 @@ function App() {
       array: json.array,
       category: json.category,
       value: calculateValue(json.array,gameData.valueData.base,gameData.valueData.coefficient),
+      finalValue: calculateValue(json.array,gameData.valueData.base,gameData.valueData.coefficient),
       revealed: json.array.map(cv => cv === " " ? null : false),
       guesses: {},
       strikes: 0,
@@ -86,12 +87,12 @@ function App() {
     return base + Math.ceil(averageValue * coefficient);
   }
 
-  function puzzleCompleted() {
+  function puzzleCompleted(value) {
     setUserData(data => {
       return {...data,
         points: {...data.points,
-          gross: data.points.gross + puzzle.value,
-          net: data.points.gross + puzzle.value - data.points.spent
+          gross: data.points.gross + value,
+          net: data.points.gross + value - data.points.spent
         }
       }
     })
@@ -125,7 +126,8 @@ function App() {
         puzzleData={puzzle}
         setPuzzleData={setPuzzle}
         newPuzzle={getPuzzle}
-        puzzleCompleted={puzzleCompleted}/>
+        puzzleCompleted={puzzleCompleted}
+        userData={userData}/>
       </Route>
       <Route exact path="/shop">
         <ShopPage />
@@ -133,34 +135,6 @@ function App() {
       <Route exact path="/leaderboard">
         <LeaderboardPage />
       </Route>
-      <button onClick={() =>{
-        setPuzzle({
-          string: 'Q',
-          array: ['Q'],
-          category: 'Test',
-          value: calculateValue(['Q'],gameData.valueData.base,gameData.valueData.coefficient),
-          revealed: [false],
-          guesses: {},
-          strikes: 0,
-          lifesavers: null,
-          rapidInputs: null,
-          completed: false
-        })
-        }}>Set to Q</button>
-      <button onClick={() =>{
-        setPuzzle({
-          string: 'E',
-          array: ['E'],
-          category: 'Test',
-          value: calculateValue(['E'],gameData.valueData.base,gameData.valueData.coefficient),
-          revealed: [false],
-          guesses: {},
-          strikes: 0,
-          lifesavers: null,
-          rapidInputs: null,
-          completed: false
-        })
-        }}>Set to E</button>
     </div>
   );
 }

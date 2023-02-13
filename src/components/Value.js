@@ -1,9 +1,9 @@
 import React from "react";
 
-function Value({ value }) {
+function Value({ puzzleData }) {
 
     return (
-        <p>{value}</p>
+        <p>{`Initial: ${puzzleData.value} | Strikes: ${puzzleData.strikes} | Final: ${puzzleData.finalValue}`}</p>
     )
 }
 
