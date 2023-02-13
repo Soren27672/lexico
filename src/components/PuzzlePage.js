@@ -4,7 +4,7 @@ import Strikes from "./Strikes";
 import Thumbnail from "./Thumbnail";
 import Value from "./Value";
 
-function PuzzlePage({ puzzleData, setPuzzleData, newPuzzle }) {
+function PuzzlePage({ puzzleData, setPuzzleData, newPuzzle, puzzleCompleted }) {
     const { category, array, revealed, value, guesses, completed } = puzzleData;
     const div = useRef();
 
@@ -45,6 +45,7 @@ function PuzzlePage({ puzzleData, setPuzzleData, newPuzzle }) {
             for (const letter of current.revealed) {
                 if (letter === false) return {...current}
             }
+            puzzleCompleted();
             return {...current, completed: true}
         });
 

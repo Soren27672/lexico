@@ -14,6 +14,25 @@ function App() {
   const [puzzle, setPuzzle] = useState(null);
   const [unusedIds, setUnusedIds] = useState([]);
   const [gameData, setGameData] = useState({});
+  const [userData, setUserData] = useState({
+    points: {
+      gross: 0,
+      spent: 0,
+      net: 0
+    },
+    bonusData: {
+      rapidInput: {
+        level: 0,
+        value: 0,
+      },
+      lifesaver: 0,
+      luckyLetter: {
+        level: 0,
+        letter: null,
+      }
+    },
+    time: 0
+  })
 
   function initialRender(){
     fetch('http://localhost:3000/puzzles')
@@ -67,6 +86,17 @@ function App() {
     return base + Math.ceil(averageValue * coefficient);
   }
 
+  function puzzleCompleted() {
+    setUserData(data => {
+      return {...data,
+        points: {...data.points,
+          gross: data.points.gross + puzzle.value,
+          net: data.points.gross + puzzle.value - data.points.spent
+        }
+      }
+    })
+  }
+
   useEffect(initialRender,[]);
 
   useEffect(() => {
@@ -84,6 +114,7 @@ function App() {
 
   return (
     <div className="App">
+      <p>{`Points: ${userData.points.net}`}</p>
       <nav>
         <NavLink to="/puzzle">Play!</NavLink>
         <NavLink to="/shop">Upgrade!</NavLink>
@@ -93,7 +124,8 @@ function App() {
         <PuzzlePage
         puzzleData={puzzle}
         setPuzzleData={setPuzzle}
-        newPuzzle={getPuzzle}/>
+        newPuzzle={getPuzzle}
+        puzzleCompleted={puzzleCompleted}/>
       </Route>
       <Route exact path="/shop">
         <ShopPage />

@@ -1,6 +1,14 @@
 # Changelog
 
 
+### 12
+- Created userData object in state in App.js
+    - Holds data about the user's current points
+    - Is set up to hold other data about the user's progression such as purchased upgrades and total time
+- PuzzlePage now takes a puzzleCompleted prop, which runs when handleGuess() detects that the puzzle has been completed
+    - Currently, it just increments the points by the puzzle's value, but it may need to do more in the future
+
+
 ### 11
 - PuzzlePage now conditionally renders a "Next Puzzle" button when puzzleData.completed is true
     - This button's onClick event accepts a callback function passed to the prop ```newPuzzle```
