@@ -1,6 +1,17 @@
 # Changelog
 
 
+### 17
+- Added bonusData to the gameData object in the backend
+    - bonusData is an array that contains all information needed to implement and upgrade bonuses
+    - Each element of the array is a bonus object that includes the details its name, description, text to be displayed on a thumbnail, base price and price growth rate, progression type, sequence (for bonuses that upgrade in a sequence), and recursion data (for bonuses that update recursively)
+- Moved userData into gameDataContext for the same reason that gameData is provided via context
+    - Renamed gameDataContext to globalContext
+    - globalContext also contains the setState function setUserData for components that need to change userData
+- Thumbnail now takes a bonus as its prop and displays some game data about that bonus, as well as a space to display some user data about that bonus
+    - Thumbnails are now added to PuzzlePage via iteration and include a key prop :)
+
+
 ### 16
 - Moved gameData object into its own essentially global context so that it can be accessed without needing to be passed down, since many components will need gameData
 - Changed detection of the initialization of the gameData object

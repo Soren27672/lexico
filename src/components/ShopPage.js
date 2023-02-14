@@ -1,13 +1,18 @@
 import React, { useState, useContext } from "react";
-import { gameDataContext } from "../gameDataContext";
+import { globalContext } from "../globalContext";
 import ShopHighlight from "./ShopHighlight";
+import Thumbnail from "./Thumbnail";
 
 function ShopPage() {
     const [ displayed, setDisplayed ] = useState(null);
-    const gameData = useContext(gameDataContext);
+    const { gameData } = useContext(globalContext);
 
     let thumbnails = []
-    for (const bonus in gameData.bonusData)
+    for (const bonus of gameData.bonusData) {
+        thumbnails.push(
+            <Thumbnail bonus={bonus} key={bonus.id}/>
+        )
+    }
 
     return (
         <div id="shop-page">

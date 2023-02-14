@@ -31,7 +31,47 @@
       "X": 57,
       "Y": 49,
       "Z": 57
-    }
+    },
+    "bonusData": [
+      {
+        "id": 1,
+        "name": "Lucky Letter",
+        "description": "You've got a lucky letter! Upon starting a puzzle, any letters that match your lucky letter will be revealed! What's more: you'll earn 75 points for each one! Purchase upgrades for more common letters.",
+        "thumbText": "letter",
+        "price": {
+          "base": 200,
+          "growthRate": 1.1
+        },
+        "sequence": ["Q","J","Z","X","V","K","W","Y","F","B","G","H","M","P","D","U","C","L","S","N","T","O","I","R","A","E"],
+        "progression": "sequence"
+      },
+      {
+        "id": 2,
+        "name": "Lifesaver",
+        "description": "Mistakes happen, so come prepared! Lifesavers prevent you from being penalized for incorrect guesses. Upgrade to increase how many lifesavers you have per round.",
+        "thumbText": "level",
+        "price": {
+          "base": 500,
+          "growthRate": 1.5
+        },
+        "progression": "increment"
+      },
+      {
+        "id": 3,
+        "name": "Rapid Input",
+        "description": "One after another! Guessing two correct letters within two seconds of each other earns 100 points! This bonus only applies for the first five letters. Upgrade to increase the reward.",
+        "thumbText": "reward",
+        "price": {
+          "base": 300,
+          "growthRate": 2
+        },
+        "progression": "recursive",
+        "recursion": {
+          "base": 100,
+          "growthRate": 1.5
+        }
+      }
+    ]
   },
   "puzzles": [
     {

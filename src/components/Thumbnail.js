@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import { globalContext } from "../globalContext";
 
-function Thumbnail() {
+function Thumbnail({ bonus }) {
+    const { userData } = useContext(globalContext);
 
     return (
-        <p>Thum</p>
+        <div>
+            <img src="../public/logo192.png" />
+            <p>{`${bonus.name} | ${userData.bonusData[bonus.thumbText]}`}</p>
+        </div>
     )
 }
 

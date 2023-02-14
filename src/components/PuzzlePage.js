@@ -1,5 +1,6 @@
 import formatDuration from "format-duration";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
+import { globalContext } from "../globalContext";
 import Blanks from "./Blanks";
 import Strikes from "./Strikes";
 import Thumbnail from "./Thumbnail";
@@ -9,6 +10,7 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
     const [ puzzleData, setPuzzleData ] = useState({...puzzleObj});
     const [ sessionInterval, setSessionInterval ] = useState(null);
     const div = useRef();
+    const { gameData } = useContext(globalContext);
 
     function handleGuess(e) {
         if ((e.key.length !== 1) || (e.key.toLowerCase() === e.key.toUpperCase())) {
@@ -59,7 +61,7 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
         let returnValue = value;
         
         if (strikes > 0) {
-            returnValue -= strikes * 40;
+            returnValue -= strikes * gameData.valueData.strike;
         }
 
 
@@ -142,6 +144,11 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
         }
     })
 
+    let thumbnails = [];
+    for (const bonus of gameData.bonusData) {
+        thumbnails.push(<Thumbnail bonus={bonus} key={bonus.id} />);
+    }
+
     return (
         <div ref={div} id="puzzle-page" onKeyDown={handleGuess} tabIndex={-1}>
             <small>{ puzzleData.category }</small>
@@ -151,9 +158,7 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
             <p>{`Time: ${formatDuration(puzzleData.time)}`}</p>
             {puzzleData.completed ? <button onClick={newPuzzle}>Next Puzzle!</button> : null}
             <div id="thumbnails">
-                <Thumbnail />
-                <Thumbnail />
-                <Thumbnail />
+                { thumbnails }
             </div>
         </div>
     )

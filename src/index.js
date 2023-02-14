@@ -4,14 +4,14 @@ import './index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { GameDataProvider } from './gameDataContext';
+import { GlobalProvider } from './globalContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    <GameDataProvider>
+    <GlobalProvider>
       <App />
-    </GameDataProvider>
+    </GlobalProvider>
   </BrowserRouter>
 );
 

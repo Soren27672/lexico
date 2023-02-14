@@ -6,7 +6,7 @@ import ShopPage from "./ShopPage";
 import randomInteger from "random-int";
 import randomItem from 'random-item';
 import formatDuration from "format-duration";
-import { gameDataContext } from "../gameDataContext";
+import { globalContext } from "../globalContext";
 
 function App() {
   const [initialized, setInitialized] = useState({
@@ -16,26 +16,7 @@ function App() {
   const [puzzle, setPuzzle] = useState(null);
   const [puzzleInitialized, setPuzzleInitialized] = useState(false);
   const [unusedIds, setUnusedIds] = useState([]);
-  const gameData = useContext(gameDataContext);
-  const [userData, setUserData] = useState({
-    points: {
-      gross: 0,
-      spent: 0,
-      net: 0
-    },
-    bonusData: {
-      rapidInput: {
-        level: 0,
-        value: 0,
-      },
-      lifesaver: 0,
-      luckyLetter: {
-        level: 0,
-        letter: null,
-      }
-    },
-    time: 0
-  })
+  const { gameData, userData, setUserData} = useContext(globalContext);
 
   function initialRender(){
     fetch('http://localhost:3000/puzzles')
@@ -138,7 +119,7 @@ function App() {
         initialized={puzzleInitialized}
         setInitialized={setPuzzleInitialized}/>
       </Route>
-      <Route path="/shop/:bonus">
+      <Route path="/shop">
         <ShopPage />
       </Route>
       <Route exact path="/leaderboard">
