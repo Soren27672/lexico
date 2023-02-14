@@ -12,7 +12,7 @@ function GlobalProvider({ children }) {
         },
         bonusData: [
             {
-            level: 0,
+            level: 3,
             letter: "None",
           },
           {

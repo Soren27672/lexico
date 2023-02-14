@@ -1,6 +1,15 @@
 # Changelog
 
 
+### 19
+- ShopHighlight now displays the proper upgrade cost and next bonus value
+    - Calculates upgrade cost by mulitplying the base upgrade cost by the growth rate raised to the power of the current bonus's level
+    - Determines next bonus value based on the progression type of the bonus, which is held in gameData
+    - If the progression value is "sequence", the nextValue is determined by accessing the bonus's sequence at the index one greater than the current level of the user's bonus
+    - If the progression value is "increment", the nextValue is determined by adding one to the user's bonus level
+    -If the progression value is "recursive", the nextValue is calculated by mulitplying the bonus's recursion.base by its recursion.growthRate raised to the power of the user's bonus level
+
+
 ### 18
 - Thumbnail now properly accesses userData based on the bonus it is passed
 - Added bonus images to the project directory and their paths to the backend
