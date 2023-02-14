@@ -1,6 +1,14 @@
 # Changelog
 
 
+### 16
+- Moved gameData object into its own essentially global context so that it can be accessed without needing to be passed down, since many components will need gameData
+- Changed detection of the initialization of the gameData object
+    - The fetch is no longer in the App component, so updating ```initialized``` state upon the fulfillment of the promise can no longer be used to move the initialization forward (previously, a useEffect dependent on ```initialized``` moved the initialization process forward)
+    - There is now a useEffect that runs every render and checks for the gameDataContext object to not be null and for initialized.gameData to be false. When these conditions are true, it sets initialized.gameData to true, which triggers the useEffect watching ```initialized``` to check if everything is initialized and subsequently to run getPuzzle()
+    - I don't like this solution; I don't like that it checks every render, but I'm not aware of another solution
+
+
 ### 15
 - Fixed cleanup function that cleared the sessionInterval
     - The cleanup function used to be part of a useEffect callback which called it before every render, it has been moved to a useEffect callback that calls it when the component is unmounted

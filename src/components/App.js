@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavLink, Route } from "react-router-dom";
 import LeaderboardPage from "./LeaderboardPage";
 import PuzzlePage from "./PuzzlePage";
@@ -6,16 +6,17 @@ import ShopPage from "./ShopPage";
 import randomInteger from "random-int";
 import randomItem from 'random-item';
 import formatDuration from "format-duration";
+import { gameDataContext } from "../gameDataContext";
 
 function App() {
   const [initialized, setInitialized] = useState({
-    initializedUnusedIds: false,
-    initializedGameData: false
+    unusedIds: false,
+    gameData: false
   });
   const [puzzle, setPuzzle] = useState(null);
   const [puzzleInitialized, setPuzzleInitialized] = useState(false);
   const [unusedIds, setUnusedIds] = useState([]);
-  const [gameData, setGameData] = useState({});
+  const gameData = useContext(gameDataContext);
   const [userData, setUserData] = useState({
     points: {
       gross: 0,
@@ -42,22 +43,9 @@ function App() {
     .then(json => {
       setUnusedIds(json.map(cv => cv.id));
       setInitialized(current => {
-        return {...current, initializedUnusedIds: true}
+        return {...current, unusedIds: true}
       });
     });
-
-    fetch('http://localhost:3000/gameData')
-    .then(r => r.json())
-    .then(json => {
-      setGameData({...json, 
-        valueData: {...(json.valueData),
-          coefficient: json.valueData.variance / json.valueData.maxLetterValue
-        }
-      })
-      setInitialized(current => {
-        return {...current, initializedGameData: true}
-      });
-    })
   }
 
   function getPuzzle() {
@@ -121,6 +109,14 @@ function App() {
     //console.log(puzzle);
   },[puzzle])
 
+  useEffect(() => {
+    if ((gameData !== null) && (initialized.gameData === false)) setInitialized(current => {
+      return {...current,
+      gameData: true
+    }
+    })
+  })
+
   if(puzzle === null) return <h1>Loading!</h1>
 
   return (
@@ -142,7 +138,7 @@ function App() {
         initialized={puzzleInitialized}
         setInitialized={setPuzzleInitialized}/>
       </Route>
-      <Route exact path="/shop">
+      <Route path="/shop/:bonus">
         <ShopPage />
       </Route>
       <Route exact path="/leaderboard">
