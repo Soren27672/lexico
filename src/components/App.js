@@ -137,7 +137,7 @@ function App() {
         handlePuzzleUpdated={updatePuzzle}
         newPuzzle={getPuzzle}
         handleCompleted={puzzleCompleted}
-        pageClosed={() => console.log('hello')}
+        pageClosed={() => null}
         userData={userData}
         initialized={puzzleInitialized}
         setInitialized={setPuzzleInitialized}/>

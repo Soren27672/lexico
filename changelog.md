@@ -1,6 +1,13 @@
 # Changelog
 
 
+### 15
+- Fixed cleanup function that cleared the sessionInterval
+    - The cleanup function used to be part of a useEffect callback which called it before every render, it has been moved to a useEffect callback that calls it when the component is unmounted
+    - Any time the interval is cleared, the value of sessionInterval in state is set to null
+- PuzzlePage now determines when to start the sessionInterval by checking if the puzzle has been completed, and then checking if there's already an interval saved in state
+
+
 ### 14
 - Refactored PuzzlePage so that it handles it has a more logical role for itself
     - Instead of recieving a setter function as a prop to change state of a puzzle object in a different component, it now houses a puzzle object in its own state, which can be accessed by functions passed to it
@@ -11,7 +18,8 @@
         - When the ```initialized``` prop is false, PuzzlePage's state is updated to match the passed puzzleObj, after which it invokes the ```setInitialized``` prop with false as its argument
     - Upon initializing a puzzle, PuzzlePage sets an interval that increments the time property of puzzleData by 1000 every second
         - This interval's id is stored in state and cleared whenver the component is unmounted or a puzzle is completed (need to resume interval when puzzle page is returned to)
-
+    - When a puzzle is completed, PuzzlePage runs App's function ```puzzleCompleted``` which gets passed as a prop to PuzzlePage
+        - puzzleCompleted adds the current puzzle's .time value to the user's .time value
 
 ### 13
 - Puzzle objects now have a finalValue property, which holds the point value of the puzzle after all modifications such as strikes and bonuses have been accounted

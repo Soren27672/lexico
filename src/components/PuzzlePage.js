@@ -86,7 +86,15 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
         return i;
     }
 
-    useEffect(focus,[])
+    useEffect(() => {
+        focus();
+
+        return () => {
+            clearInterval(sessionInterval);
+            setSessionInterval(null);
+            pageClosed();
+        };
+    },[])
 
     useEffect(() => {
         handlePuzzleUpdated(puzzleData);
@@ -103,6 +111,7 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
 
         if ((puzzleData.completed) && (puzzleData.completedRan === false)) {
             clearInterval(sessionInterval);
+            setSessionInterval(null);
             handleCompleted();
             setPuzzleData(current => {
                 return {...current,
@@ -117,23 +126,21 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
         if (initialized === false) {
             setPuzzleData({ ...puzzleObj});
             setInitialized(true);
+        }
             
+        console.log(sessionInterval,puzzleData.completed,!sessionInterval && !(puzzleData.completed))
+        if (!sessionInterval && !(puzzleData.completed)) {
             const interval = setInterval(() => {
-                setPuzzleData(currentPuzzle => {
-                    return {...currentPuzzle,
-                        time: currentPuzzle.time + 1000
+                setPuzzleData(current => {
+                    return {...current,
+                        time: current.time + 1000
                     }
                 })
             },1000)
-    
+        
             setSessionInterval(interval);
-    
-            return () => {
-                clearInterval(sessionInterval);
-                pageClosed();
-            };
         }
-    },)
+    })
 
     return (
         <div ref={div} id="puzzle-page" onKeyDown={handleGuess} tabIndex={-1}>
