@@ -36,6 +36,7 @@
       {
         "id": 1,
         "name": "Lucky Letter",
+        "image": "Luckyletter.png",
         "description": "You've got a lucky letter! Upon starting a puzzle, any letters that match your lucky letter will be revealed! What's more: you'll earn 75 points for each one! Purchase upgrades for more common letters.",
         "thumbText": "letter",
         "price": {
@@ -48,6 +49,7 @@
       {
         "id": 2,
         "name": "Lifesaver",
+        "image": "Lifesaver.png",
         "description": "Mistakes happen, so come prepared! Lifesavers prevent you from being penalized for incorrect guesses. Upgrade to increase how many lifesavers you have per round.",
         "thumbText": "level",
         "price": {
@@ -59,6 +61,7 @@
       {
         "id": 3,
         "name": "Rapid Input",
+        "image": "RapidInput.png",
         "description": "One after another! Guessing two correct letters within two seconds of each other earns 100 points! This bonus only applies for the first five letters. Upgrade to increase the reward.",
         "thumbText": "reward",
         "price": {

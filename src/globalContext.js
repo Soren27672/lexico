@@ -10,17 +10,19 @@ function GlobalProvider({ children }) {
           spent: 0,
           net: 0
         },
-        bonusData: {
-          rapidInput: {
+        bonusData: [
+            {
             level: 0,
-            value: 0,
+            letter: "None",
           },
-          lifesaver: 0,
-          luckyLetter: {
+          {
+            level: 0
+          },
+          {
             level: 0,
-            letter: null,
+            reward: 0,
           }
-        },
+        ],
         time: 0
       })
 

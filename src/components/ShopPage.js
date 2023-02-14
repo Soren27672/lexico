@@ -10,14 +10,14 @@ function ShopPage() {
     let thumbnails = []
     for (const bonus of gameData.bonusData) {
         thumbnails.push(
-            <Thumbnail bonus={bonus} key={bonus.id}/>
+            <Thumbnail handleClick={() => setDisplayed(bonus)} bonus={bonus} key={bonus.id}/>
         )
     }
 
     return (
         <div id="shop-page">
             <h1>Let's make some upgrades!</h1>
-            { displayed === null ? null : <ShopHighlight /> }
+            { displayed === null ? null : <ShopHighlight bonus={displayed}/> }
             { thumbnails }
 
         </div>

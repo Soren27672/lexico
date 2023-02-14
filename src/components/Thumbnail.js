@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { globalContext } from "../globalContext";
 
-function Thumbnail({ bonus }) {
+function Thumbnail({ bonus, handleClick }) {
     const { userData } = useContext(globalContext);
 
     return (
-        <div>
-            <img src="../public/logo192.png" />
-            <p>{`${bonus.name} | ${userData.bonusData[bonus.thumbText]}`}</p>
+        <div onClick={handleClick}>
+            <img src={bonus.image} />
+            <p>{userData.bonusData[bonus.id - 1][bonus.thumbText]}</p>
         </div>
     )
 }

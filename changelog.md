@@ -1,10 +1,17 @@
 # Changelog
 
 
+### 18
+- Thumbnail now properly accesses userData based on the bonus it is passed
+- Added bonus images to the project directory and their paths to the backend
+    - Thumbnail now loads bonus's image
+- Clicking on the thumbnails rendered by the ShopPage component now opens a ShopHighlight, which displays more information about the bonus and will eventually provide an interface to upgrade the bonus
+
+
 ### 17
 - Added bonusData to the gameData object in the backend
     - bonusData is an array that contains all information needed to implement and upgrade bonuses
-    - Each element of the array is a bonus object that includes the details its name, description, text to be displayed on a thumbnail, base price and price growth rate, progression type, sequence (for bonuses that upgrade in a sequence), and recursion data (for bonuses that update recursively)
+    - Each element of the array is a bonus object that includes the details its name, description, property to be accessed for display on a thumbnail, base price and price growth rate, progression type, sequence (for bonuses that upgrade in a sequence), and recursion data (for bonuses that update recursively)
 - Moved userData into gameDataContext for the same reason that gameData is provided via context
     - Renamed gameDataContext to globalContext
     - globalContext also contains the setState function setUserData for components that need to change userData

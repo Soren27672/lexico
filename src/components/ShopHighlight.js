@@ -1,12 +1,13 @@
 import React from "react";
-import { useRouteMatch } from "react-router-dom";
 
-function ShopHighlight() {
-    const match = useRouteMatch();
+function ShopHighlight({ bonus }) {
 
     return (
         <div id="shop-highlight">
-            <h1>Shop Highlight!</h1>
+            <img src={bonus.image} />
+            <h1>{bonus.name}</h1>
+            <p>{bonus.description}</p>
+            <strong>{bonus.price.base}</strong>
         </div>
     )
 }
