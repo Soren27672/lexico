@@ -59,23 +59,24 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
 
     function calculateFinalValue({ value, strikes, rapidInput, array }) {
         let returnValue = value;
-        
-        if (strikes > 0) {
-            returnValue -= strikes * gameData.valueData.strike;
-        }
-
 
         if (userData.bonusData[0].level > 0) {
             array.forEach(letter => {
                 if (letter === userData.bonusData[0].letter) {
-                    returnValue += 50;
+                    returnValue += gameData.bonusData[0].value;
                 }
              });
         }
-        
+
          if (userData.bonusData[2] > 0) {
             returnValue = returnValue * (userData.bonusData[2].value ** rapidInput);
          }
+
+         if (userData.bonusData[1].level < strikes) {
+            returnValue *= gameData.valueData.strike ** (strikes - userData.bonusData[1].level);
+        }
+
+         returnValue = Math.ceil(returnValue)
 
          return returnValue;
     }
@@ -127,8 +128,13 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
     useEffect(() => {
         if (initialized === false) {
             console.log(puzzleObj);
+            const newRevealed = puzzleObj.revealed.map((blank,index) => {
+                return puzzleObj.array[index] === userData.bonusData[0].letter ? true : blank
+            })
+
             setPuzzleData({ ...puzzleObj,
-                lifesavers: userData.bonusData.level
+                finalValue: calculateFinalValue(puzzleObj),
+                revealed: newRevealed
             });
             setInitialized(true);
         }

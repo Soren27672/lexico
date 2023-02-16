@@ -2,7 +2,7 @@
   "gameData": {
     "valueData": {
       "base": 50,
-      "strike": 50,
+      "strike": 0.67,
       "variance": 350,
       "maxLetterValue": 57,
       "A": 15,
@@ -37,14 +37,16 @@
         "id": 1,
         "name": "Lucky Letter",
         "image": "Luckyletter.png",
-        "description": "You've got a lucky letter! Upon starting a puzzle, any letters that match your lucky letter will be revealed! What's more: you'll earn 75 points for each one! Purchase upgrades for more common letters.",
+        "description": "You've got a lucky letter! Upon starting a puzzle, any letters that match your lucky letter will be revealed! What's more: you'll earn 400 points for each one! Purchase upgrades for more common letters.",
         "thumbText": "letter",
         "price": {
           "base": 200,
           "growthRate": 1.1
         },
         "sequence": ["Q","J","Z","X","V","K","W","Y","F","B","G","H","M","P","D","U","C","L","S","N","T","O","I","R","A","E"],
-        "progression": "sequence"
+        "progression": "sequence",
+        "value": 400,
+        "limit": 26
       },
       {
         "id": 2,

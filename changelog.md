@@ -1,6 +1,15 @@
 # Changelog
 
 
+### 21
+- The calculateFinalValue function now properly accounts for the user's Lifesaver level and Lucky Letter when calculating the puzzle's final value
+    - If the user has unlocked Lucky Letter, then calculateFinalValue will iterate thru all letters in the array property of its provided puzzle object and increment the function's returnValue by Lucky Letter's value in gameData for each letter that matches the user's Lucky Letter
+    - If the user has more strikes than lifesavers, then the function's returnValue will be multiplied by gameData.valueData.strike to the power of the difference between strikes and lifesavers
+- When PuzzlePage initializes a puzzleObj, it now reveals the player's Lucky Letter
+
+
+
+
 ### 20
 - ShopHighlight now destructures its bonus prop into its several properties
     - Previously, it accessed the property values with ```bonus.``` every time
