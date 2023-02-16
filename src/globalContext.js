@@ -6,7 +6,7 @@ function GlobalProvider({ children }) {
     const [ gameData, setGameData ] = useState(null)
     const [userData, setUserData] = useState({
         points: {
-          gross: 0,
+          gross: 1000,
           spent: 0,
           net: 0
         },
@@ -40,6 +40,19 @@ function GlobalProvider({ children }) {
             })
         });
     },[])
+
+    useEffect(() => {
+
+        if (userData.points.net !== (userData.points.gross - userData.points.spent)) {
+          setUserData(data => {
+            return {...data,
+              points: {...data.points,
+                net: data.points.gross - data.points.spent
+              }
+            }
+          })
+        }
+      },[userData])
 
     return <globalContext.Provider value={{gameData: gameData, userData: userData, setUserData: setUserData}}>{children}</globalContext.Provider>
 }

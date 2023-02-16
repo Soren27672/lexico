@@ -1,6 +1,15 @@
 # Changelog
 
 
+### 20
+- ShopHighlight now destructures its bonus prop into its several properties
+    - Previously, it accessed the property values with ```bonus.``` every time
+- Created function handleUpgradeClick, which checks if userData.points.net is greater than or equal to upgradePrice and then runs appropriate code
+    - If true, it updates userData to increment the respective bonus's level by one and increase points.spent by upgradePrice
+    - If false, it console.logs 'Insufficient funds'
+- Added a useEffect in globalContext dependent on userData that checks if price.net equals price.gross - price.spent, and then updates price.net if not
+
+
 ### 19
 - ShopHighlight now displays the proper upgrade cost and next bonus value
     - Calculates upgrade cost by mulitplying the base upgrade cost by the growth rate raised to the power of the current bonus's level

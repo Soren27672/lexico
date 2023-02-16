@@ -65,16 +65,16 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
         }
 
 
-        if (userData.bonusData.luckyLetter.level > 0) {
+        if (userData.bonusData[0].level > 0) {
             array.forEach(letter => {
-                if (letter === userData.bonusData.luckyLetter.letter) {
+                if (letter === userData.bonusData[0].letter) {
                     returnValue += 50;
                 }
              });
         }
         
-         if (userData.bonusData.rapidInput > 0) {
-            returnValue = returnValue * (userData.bonusData.rapidInput.value ** rapidInput);
+         if (userData.bonusData[2] > 0) {
+            returnValue = returnValue * (userData.bonusData[2].value ** rapidInput);
          }
 
          return returnValue;
@@ -126,11 +126,13 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
 
     useEffect(() => {
         if (initialized === false) {
-            setPuzzleData({ ...puzzleObj});
+            console.log(puzzleObj);
+            setPuzzleData({ ...puzzleObj,
+                lifesavers: userData.bonusData.level
+            });
             setInitialized(true);
         }
             
-        console.log(sessionInterval,puzzleData.completed,!sessionInterval && !(puzzleData.completed))
         if (!sessionInterval && !(puzzleData.completed)) {
             const interval = setInterval(() => {
                 setPuzzleData(current => {
