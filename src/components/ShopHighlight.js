@@ -40,7 +40,7 @@ function ShopHighlight({ bonus }) {
 
     return (
         <div id="shop-highlight">
-            <img src={image} />
+            <img src={image} alt={name}/>
             <h1>{name}</h1>
             <p>{description}</p>
             <strong>{upgradePrice}</strong>

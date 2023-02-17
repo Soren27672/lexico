@@ -42,8 +42,8 @@ function App() {
       revealed: json.array.map(cv => cv === " " ? null : false),
       guesses: {},
       strikes: 0,
-      lifesavers: null,
-      rapidInputs: null,
+      lifesavers: 0,
+      rapidInputs: 0,
       time: 0,
       completed: false,
       completedRan: false

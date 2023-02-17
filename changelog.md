@@ -1,6 +1,16 @@
 # Changelog
 
 
+### 22
+- Added alt props for images
+- Changed strike penalty to 20% of final points
+    - calculateFinalValue's previous strike calculation was replaced, now it multiplies its returnValue by 1 - the strike value times the number of strikes
+    - Strike's valueData is now 0.2 in db.json
+- Implemented Rapid Input bonus
+    - Upon guessing a correct letter, if the user has purchased Rapid Input, a 2 second timeout is started and it's id is stored in state under rapidInputTimeout. When the timeout expires, rapidInputTimeout is set to null
+    - Upon guessing a letter (before creating the timeout), the program checks if rapidInputTimeout is not null, and if it isn't, it calls clearTimeout on rapidInputTimeout and increments puzzleData.rapidInputs by 1
+
+
 ### 21
 - The calculateFinalValue function now properly accounts for the user's Lifesaver level and Lucky Letter when calculating the puzzle's final value
     - If the user has unlocked Lucky Letter, then calculateFinalValue will iterate thru all letters in the array property of its provided puzzle object and increment the function's returnValue by Lucky Letter's value in gameData for each letter that matches the user's Lucky Letter

@@ -6,7 +6,7 @@ function Thumbnail({ bonus, handleClick }) {
 
     return (
         <div onClick={handleClick}>
-            <img src={bonus.image} />
+            <img src={bonus.image} alt={bonus.name} />
             <p>{userData.bonusData[bonus.id - 1][bonus.thumbText]}</p>
         </div>
     )

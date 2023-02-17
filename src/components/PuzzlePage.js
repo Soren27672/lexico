@@ -9,8 +9,11 @@ import Value from "./Value";
 function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle, pageClosed, userData, initialized, setInitialized }) {
     const [ puzzleData, setPuzzleData ] = useState({...puzzleObj});
     const [ sessionInterval, setSessionInterval ] = useState(null);
+    const [ rapidInputTimeout, setRapidInputTimeout ] = useState(null);
     const div = useRef();
     const { gameData } = useContext(globalContext);
+
+    /* console.log('On reregistry: ',puzzleData) */
 
     function handleGuess(e) {
         if ((e.key.length !== 1) || (e.key.toLowerCase() === e.key.toUpperCase())) {
@@ -33,11 +36,6 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
                     strikes: instancesOfValueInObject({...(current.guesses), [guess]: false},false),
                 }
             })
-            setPuzzleData(current => {
-                return {...current,
-                    finalValue: calculateFinalValue(current)
-                }
-            })
             return;
         }
 
@@ -51,29 +49,55 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
             }
         });
 
+        if (rapidInputTimeout !== null) {
+            clearTimeout(rapidInputTimeout);
+            console.log('Guess registered while timer active');
+            setPuzzleData(data => {
+                /* console.log({...data, rapidInputs: data.rapidInputs + 1}); */
+                return {...data,
+                    rapidInputs: data.rapidInputs + 1
+                }
+            })
+        }
+
+        if(userData.bonusData[2].level > 0) {
+            console.log('Activated timer');
+            setRapidInputTimeout(() => {
+                return setTimeout(() => {
+                console.log('Timer expired');
+                    setRapidInputTimeout(null);
+                },2000);
+            })
+        }
+
     }
 
     function focus() {
         div.current.focus();
     }
 
-    function calculateFinalValue({ value, strikes, rapidInput, array }) {
+    function calculateFinalValue({ value, strikes, rapidInputs, array }) {
+        const luckyLetterData = userData.bonusData[0];
+        const lifesaverData = userData.bonusData[1];
+        const rapidInputData = userData.bonusData[2];
+
         let returnValue = value;
 
-        if (userData.bonusData[0].level > 0) {
+        if (luckyLetterData.level > 0) {
             array.forEach(letter => {
-                if (letter === userData.bonusData[0].letter) {
+                if (letter === luckyLetterData.letter) {
                     returnValue += gameData.bonusData[0].value;
                 }
              });
         }
 
-         if (userData.bonusData[2] > 0) {
-            returnValue = returnValue * (userData.bonusData[2].value ** rapidInput);
+         if (rapidInputData.level > 0) {
+            console.log(rapidInputData.reward,rapidInputs);
+            returnValue += (rapidInputData.reward * rapidInputs);
          }
 
-         if (userData.bonusData[1].level < strikes) {
-            returnValue *= gameData.valueData.strike ** (strikes - userData.bonusData[1].level);
+         if (lifesaverData.level < strikes) {
+            returnValue *= 1 - (gameData.valueData.strike * (strikes - lifesaverData.level));
         }
 
          returnValue = Math.ceil(returnValue)
@@ -105,8 +129,8 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
         const lettersRemaining = puzzleData.revealed.filter(blank => blank === false).length;
 
         if ((lettersRemaining === 0) && (puzzleData.completed === false)) {
-            setPuzzleData(current => {
-                return {...current,
+            setPuzzleData(data => {
+                return {...data,
                     completed: true
                 }
             })
@@ -116,9 +140,17 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
             clearInterval(sessionInterval);
             setSessionInterval(null);
             handleCompleted();
-            setPuzzleData(current => {
-                return {...current,
+            setPuzzleData(data => {
+                return {...data,
                     completedRan: true
+                }
+            })
+        }
+
+        if (puzzleData.finalValue !== calculateFinalValue(puzzleData)) {
+            setPuzzleData(data => {
+                return {...data,
+                    finalValue: calculateFinalValue(data)
                 }
             })
         }

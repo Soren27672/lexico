@@ -12,15 +12,15 @@ function GlobalProvider({ children }) {
         },
         bonusData: [
             {
-            level: 26,
-            letter: "E",
+            level: 0,
+            letter: "None",
           },
           {
             level: 0
           },
           {
-            level: 0,
-            reward: 0,
+            level: 1,
+            reward: 100,
           }
         ],
         time: 0

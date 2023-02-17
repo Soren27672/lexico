@@ -2,7 +2,7 @@
   "gameData": {
     "valueData": {
       "base": 50,
-      "strike": 0.67,
+      "strike": 0.2,
       "variance": 350,
       "maxLetterValue": 57,
       "A": 15,
