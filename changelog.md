@@ -1,6 +1,17 @@
 # Changelog
 
 
+### 25
+- Fixed bug in globalContext that assigned the wrong letter to correctLuckyLetter
+    - Added "None" to the beginning of the sequence held in the server so that sequence\[level\] properly correlated with index of the letter in the sequence
+- Buttons shown on ShopHighlight now read 'Purchase', 'Upgrade' and 'Maxed Out' appropriately
+    - Assigns a string to the variable buttonText: 'Purchase' when the user's bonus's level is 0, 'Upgrade' when it's between 0 and the bonus's limit, and 'Maxed Out' otherwise
+- The text that displays the nextValue after the upgrade button now has a bonus-based unit added on
+    - Units are stored in the server's gameData as an object containing singular and plural properties
+    - When nextValue is 1, unit.singular is appended, otherwise, unit.plural is
+- This text is now conditionally rendered so long as the user's bonus's level is less than the limit
+
+
 ### 24
 - Added nested routes to ShopPage
     - Added a route to ShopPage that creates a url parameter :bonus which, upon matching, loads the ShopHighlight

@@ -43,10 +43,14 @@
           "base": 200,
           "growthRate": 1.1
         },
-        "sequence": ["Q","J","Z","X","V","K","W","Y","F","B","G","H","M","P","D","U","C","L","S","N","T","O","I","R","A","E"],
+        "sequence": ["None","Q","J","Z","X","V","K","W","Y","F","B","G","H","M","P","D","U","C","L","S","N","T","O","I","R","A","E"],
         "progression": "sequence",
         "value": 400,
-        "limit": 26
+        "limit": 26,
+        "unit": {
+          "singular": "",
+          "plural": ""
+        }
       },
       {
         "id": 2,
@@ -59,7 +63,11 @@
           "growthRate": 1.5
         },
         "progression": "increment",
-        "limit": 1000
+        "limit": 1000,
+        "unit": {
+          "singular": " Lifesaver",
+          "plural": " Lifesavers"
+        }
       },
       {
         "id": 3,
@@ -76,7 +84,11 @@
           "base": 200,
           "growthRate": 1.5
         },
-        "limit": 1000
+        "limit": 1000,
+        "unit": {
+          "singular": " Point Reward",
+          "plural": " Point Reward"
+        }
       }
     ]
   },

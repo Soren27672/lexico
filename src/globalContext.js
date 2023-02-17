@@ -19,8 +19,8 @@ function GlobalProvider({ children }) {
             level: 0
           },
           {
-            level: 1,
-            reward: 200,
+            level: 0,
+            reward: 0,
           }
         ],
         time: 0
