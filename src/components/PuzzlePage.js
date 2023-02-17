@@ -183,8 +183,8 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
     })
 
     let thumbnails = [];
-    for (const bonus of gameData.bonusData) {
-        thumbnails.push(<Thumbnail bonus={bonus} key={bonus.id} />);
+    for (const bonus in gameData.bonusData) {
+        thumbnails.push(<Thumbnail bonus={gameData.bonusData[bonus]} path={`/shop/${bonus}`} key={gameData.bonusData[bonus].id} />);
     }
 
     return (

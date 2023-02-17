@@ -1,6 +1,14 @@
 # Changelog
 
 
+### 24
+- Added nested routes to ShopPage
+    - Added a route to ShopPage that creates a url parameter :bonus which, upon matching, loads the ShopHighlight
+    - ShopHighlight accesses the url parameter with useParams, and accesses gameData.bonusData at the provided url parameter to load information about the correct bonus
+- The returned JSX of the Thumbnail component is now wrapped in a NavLink that links to the respective bonus's shop highlight url
+- ShopHighlight and Thumbnail now both add '/' before their image filenames so that they can more reliably access the files
+
+
 ### 23
 - Updated Rapid Input to only affect the first five correct guesses
     - Before checking if rapidInputTimeout is not null, the program initializes a variable amountOfCorrectGuesses, which it then increments for each key in the puzzleData.guesses object whose value is true

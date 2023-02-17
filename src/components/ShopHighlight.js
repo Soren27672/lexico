@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
+import { useParams } from "react-router-dom";
 import { globalContext } from "../globalContext";
 
-function ShopHighlight({ bonus }) {
-    /* const upgradeActive = userData.points.net >=  */
-    const { progression, sequence, recursion, price, image, name, description, id } = bonus
-    const { userData, setUserData } = useContext(globalContext);
+function ShopHighlight() {
+    
+    const { userData, setUserData, gameData } = useContext(globalContext);
+    const { bonus } = useParams();
+    const { progression, sequence, recursion, price, image, name, description, id } = gameData.bonusData[bonus]
     const userBonusData = userData.bonusData[id - 1];
     const upgradePrice = Math.ceil(price.base * (price.growthRate ** userBonusData.level));
 
@@ -27,7 +29,7 @@ function ShopHighlight({ bonus }) {
                         spent: data.points.spent + upgradePrice}
                 }
             })
-        } else console.log('Insufficient funds');
+        } else console.log('Insufficient funds');   
     }
     
 
@@ -40,7 +42,7 @@ function ShopHighlight({ bonus }) {
 
     return (
         <div id="shop-highlight">
-            <img src={image} alt={name}/>
+            <img src={'/'+image} alt={name}/>
             <h1>{name}</h1>
             <p>{description}</p>
             <strong>{upgradePrice}</strong>
