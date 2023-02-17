@@ -1,6 +1,15 @@
 # Changelog
 
 
+### 26
+- Created Rank component which takes a userObj containing a name, time and points property, then creates a div that displays that information as well as a points per minute
+    - Added round-to package
+- Added rankings property to the server at the top level
+    - rankings is an array of user objects containing a name, time and points property
+- LeaderboardPage now fetches to the backend at "rankings" and stores the response in state
+    - Once the fetch fulfills, the component iterates thru the rankings and creates a Rank component for the first 50 in the list as well as one for the current userData, given the name 'You'
+
+
 ### 25
 - Fixed bug in globalContext that assigned the wrong letter to correctLuckyLetter
     - Added "None" to the beginning of the sequence held in the server so that sequence\[level\] properly correlated with index of the letter in the sequence

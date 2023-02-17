@@ -92,6 +92,18 @@
       }
     ]
   },
+  "rankings": [
+    {
+      "name": "Max",
+      "points": 10,
+      "time": 10000
+    },
+    {
+      "name": "Say delay D",
+      "points": 50,
+      "time": 3600000 
+    }
+  ],
   "puzzles": [
     {
       "string": "BLUEBERRY PANCAKES",
