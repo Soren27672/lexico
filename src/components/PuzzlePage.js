@@ -13,8 +13,6 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
     const div = useRef();
     const { gameData } = useContext(globalContext);
 
-    /* console.log('On reregistry: ',puzzleData) */
-
     function handleGuess(e) {
         if ((e.key.length !== 1) || (e.key.toLowerCase() === e.key.toUpperCase())) {
             console.log('Invalid Character');
@@ -49,11 +47,14 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
             }
         });
 
-        if (rapidInputTimeout !== null) {
+        let amountOfCorrectGuesses = 0;
+        Object.keys(puzzleData.guesses).forEach(guess => {
+            if (puzzleData.guesses[guess] === true) ++amountOfCorrectGuesses;
+        })
+
+        if ((rapidInputTimeout !== null) && (amountOfCorrectGuesses < 6)) {
             clearTimeout(rapidInputTimeout);
-            console.log('Guess registered while timer active');
             setPuzzleData(data => {
-                /* console.log({...data, rapidInputs: data.rapidInputs + 1}); */
                 return {...data,
                     rapidInputs: data.rapidInputs + 1
                 }
@@ -61,10 +62,8 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
         }
 
         if(userData.bonusData[2].level > 0) {
-            console.log('Activated timer');
             setRapidInputTimeout(() => {
                 return setTimeout(() => {
-                console.log('Timer expired');
                     setRapidInputTimeout(null);
                 },2000);
             })
@@ -92,7 +91,6 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
         }
 
          if (rapidInputData.level > 0) {
-            console.log(rapidInputData.reward,rapidInputs);
             returnValue += (rapidInputData.reward * rapidInputs);
          }
 

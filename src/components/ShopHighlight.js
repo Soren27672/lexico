@@ -9,7 +9,7 @@ function ShopHighlight({ bonus }) {
     const upgradePrice = Math.ceil(price.base * (price.growthRate ** userBonusData.level));
 
     function handleUpgradeClick() {
-        if (userData.points.net >= upgradePrice) {
+        if ((userData.points.net >= upgradePrice) && (userBonusData.level < bonus.limit)) {
             console.log('Upgrade allowed');
 
             const updatedBonusArray = userData.bonusData.map((bonus,index) => {
@@ -35,7 +35,7 @@ function ShopHighlight({ bonus }) {
     if (progression === "sequence") nextValue = sequence[userBonusData.level + 1];
     if (progression === "increment") nextValue = userBonusData.level + 1;
     if (progression === "recursive") {
-        nextValue = recursion.base * (recursion.growthRate ** userBonusData.level);
+        nextValue = Math.ceil(recursion.base * (recursion.growthRate ** (userBonusData.level + 1)));
     }
 
     return (

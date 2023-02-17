@@ -58,13 +58,14 @@
           "base": 500,
           "growthRate": 1.5
         },
-        "progression": "increment"
+        "progression": "increment",
+        "limit": 1000
       },
       {
         "id": 3,
         "name": "Rapid Input",
         "image": "RapidInput.png",
-        "description": "One after another! Guessing two correct letters within two seconds of each other earns 100 points! This bonus only applies for the first five letters. Upgrade to increase the reward.",
+        "description": "One after another! Guessing two correct letters within two seconds earns bonus points! This bonus only applies for the first five letters. Upgrade to increase the reward.",
         "thumbText": "reward",
         "price": {
           "base": 300,
@@ -72,9 +73,10 @@
         },
         "progression": "recursive",
         "recursion": {
-          "base": 100,
+          "base": 200,
           "growthRate": 1.5
-        }
+        },
+        "limit": 1000
       }
     ]
   },

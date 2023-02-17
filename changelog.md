@@ -1,6 +1,16 @@
 # Changelog
 
 
+### 23
+- Updated Rapid Input to only affect the first five correct guesses
+    - Before checking if rapidInputTimeout is not null, the program initializes a variable amountOfCorrectGuesses, which it then increments for each key in the puzzleData.guesses object whose value is true
+    - The program then checks that this value is less than 6 before incrementing puzzleData.rapidInputs
+- globalContext now checks if values in its userData object that are dependent on other values are their correct values every time userData updates
+    - Calculates what points.net should be (points.gross - points.spent)
+    - Calculates what userData.bonusData\[2(Rapid Input)\].reward should be based on the user's Rapid Input level and the server's recursion data for Rapid Input
+    - Determines what userData.bonusData\[0(Lucky Letter)\].letter should be based on the user's Lucky Letter level and the server's sequence data for Lucky Letter
+
+
 ### 22
 - Added alt props for images
 - Changed strike penalty to 20% of final points
