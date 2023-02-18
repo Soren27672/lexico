@@ -43,7 +43,35 @@
           "base": 200,
           "growthRate": 1.1
         },
-        "sequence": ["None","Q","J","Z","X","V","K","W","Y","F","B","G","H","M","P","D","U","C","L","S","N","T","O","I","R","A","E"],
+        "sequence": [
+          "None",
+          "Q",
+          "J",
+          "Z",
+          "X",
+          "V",
+          "K",
+          "W",
+          "Y",
+          "F",
+          "B",
+          "G",
+          "H",
+          "M",
+          "P",
+          "D",
+          "U",
+          "C",
+          "L",
+          "S",
+          "N",
+          "T",
+          "O",
+          "I",
+          "R",
+          "A",
+          "E"
+        ],
         "progression": "sequence",
         "value": 400,
         "limit": 26,
@@ -94,14 +122,22 @@
   },
   "rankings": [
     {
+      "id": 1,
       "name": "Max",
       "points": 10,
       "time": 10000
     },
     {
+      "id": 2,
       "name": "Say delay D",
       "points": 50,
-      "time": 3600000 
+      "time": 3600000
+    },
+    {
+      "name": "Ruta Ruta",
+      "points": 100206,
+      "time": 8000,
+      "id": 3
     }
   ],
   "puzzles": [

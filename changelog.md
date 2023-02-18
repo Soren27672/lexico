@@ -1,6 +1,16 @@
 # Changelog
 
 
+### 27
+- Moved rankings fetch request to its own function getRankings()
+    - getRankings now sorts its response by points high to low
+- LeaderboardPage now has a form where you can enter a name and submit your score to the database
+    - Created controlled form containing one text input stored under formName in LeaderboardPage
+    - Upon the form submitting, it calls the new function postScore, which accepts arguments for name, points, time and event. The form first checks that the name arg is not '' and that the points and time args are not 0. If the args match those values, it logs an error and returns the function
+    - If the args pass the checks, the function sends a POST request to the rankings in the server with an object containing the three args (e is just used to run e.preventDefault())
+    - Upon the request fulfilling, the component calls getRankings so that the newly posted score is displayed
+
+
 ### 26
 - Created Rank component which takes a userObj containing a name, time and points property, then creates a div that displays that information as well as a points per minute
     - Added round-to package
