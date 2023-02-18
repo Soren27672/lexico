@@ -1,6 +1,14 @@
 # Changelog
 
 
+### 28
+- Created Message component that takes a text prop and returns a message-class div containing a \<p\> with the provided text
+    - This Message component is conditionally rendered by App based on whether or not the new stateful variable ```messageData``` is null
+    - App's state ```messageData.text``` is provided to Message as a text prop
+    - A new function sendMessage in App takes args for text and duration, clears the previous timeout stored in messageData, and then creates a new timeout which sets messageData to null upon expiration. After starting the timeout, messageData is set to an object containing the provided text and the id for the newly created timeout
+    - sendMessage is provided as a prop to LeaderboardPage, ShopPage and ShopHighlight so that they can send messages to the user when appropriate
+
+
 ### 27
 - Moved rankings fetch request to its own function getRankings()
     - getRankings now sorts its response by points high to low

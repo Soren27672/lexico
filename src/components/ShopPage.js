@@ -4,7 +4,7 @@ import { globalContext } from "../globalContext";
 import ShopHighlight from "./ShopHighlight";
 import Thumbnail from "./Thumbnail";
 
-function ShopPage() {
+function ShopPage({ sendMessage }) {
     const [ displayed, setDisplayed ] = useState(null);
     const { gameData } = useContext(globalContext);
 
@@ -19,7 +19,7 @@ function ShopPage() {
         <div id="shop-page">
             <h1>Let's make some upgrades!</h1>
             <Route path="/shop/:bonus">
-                <ShopHighlight />
+                <ShopHighlight sendMessage={sendMessage}/>
             </Route>
             { thumbnails }
 

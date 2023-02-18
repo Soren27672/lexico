@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { globalContext } from "../globalContext";
 
-function ShopHighlight() {
+function ShopHighlight({ sendMessage }) {
     
     const { userData, setUserData, gameData } = useContext(globalContext);
     const { bonus } = useParams();
@@ -16,25 +16,32 @@ function ShopHighlight() {
     else buttonText = 'Maxed Out';
 
     function handleUpgradeClick() {
-        if ((userData.points.net >= upgradePrice) && (userBonusData.level < limit)) {
-            console.log('Upgrade allowed');
 
-            const updatedBonusArray = userData.bonusData.map((bonus,index) => {
-                return index === id - 1
-                    ? {...bonus,
-                        level: bonus.level + 1
-                    }
-                    : bonus
-            })
+        if (userData.points.net < upgradePrice) {
+            sendMessage('Not enough points',3);
+            return;
+        }
 
-            setUserData(data => {
-                return {...data,
-                    bonusData: updatedBonusArray,
-                    points: {...data.points,
-                        spent: data.points.spent + upgradePrice}
+        if (userBonusData.level >= limit) {
+            sendMessage('Cannot upgrade bonus further',3);
+            return;
+        }
+
+        const updatedBonusArray = userData.bonusData.map((bonus,index) => {
+            return index === id - 1
+                ? {...bonus,
+                    level: bonus.level + 1
                 }
-            })
-        } else console.log('Insufficient funds');   
+                : bonus
+        })
+
+        setUserData(data => {
+            return {...data,
+                bonusData: updatedBonusArray,
+                points: {...data.points,
+                    spent: data.points.spent + upgradePrice}
+            }
+        })  
     }
     
 

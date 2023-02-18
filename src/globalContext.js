@@ -6,9 +6,9 @@ function GlobalProvider({ children }) {
     const [ gameData, setGameData ] = useState(null)
     const [userData, setUserData] = useState({
         points: {
-          gross: 100000,
+          gross: 0,
           spent: 0,
-          net: 100000
+          net: 0
         },
         bonusData: [
             {

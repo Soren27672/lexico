@@ -7,6 +7,7 @@ import randomInteger from "random-int";
 import randomItem from 'random-item';
 import formatDuration from "format-duration";
 import { globalContext } from "../globalContext";
+import Message from "./Message";
 
 function App() {
   const [initialized, setInitialized] = useState({
@@ -16,6 +17,7 @@ function App() {
   const [puzzle, setPuzzle] = useState(null);
   const [puzzleInitialized, setPuzzleInitialized] = useState(false);
   const [unusedIds, setUnusedIds] = useState([]);
+  const [messageData, setMessageData] = useState(null);
   const { gameData, userData, setUserData} = useContext(globalContext);
 
   function initialRender(){
@@ -77,6 +79,16 @@ function App() {
     setPuzzle({...puzzleObj});
   }
 
+  function sendMessage(text,duration) {
+    if (messageData !== null) clearTimeout(messageData.timeout);
+
+    const timeout = setTimeout(() => {
+      setMessageData(null);
+    },duration * 1000)
+
+    setMessageData({ text: text, timeout: timeout });
+  }
+
   useEffect(initialRender,[]);
 
   useEffect(() => {
@@ -102,6 +114,7 @@ function App() {
 
   return (
     <div className="App">
+      { messageData === null ? null : <Message text={messageData.text} />}
       <p>{`Points: ${userData.points.net}, Time: ${formatDuration(userData.time)}`}</p>
       <nav>
         <NavLink to="/puzzle">Play!</NavLink>
@@ -117,13 +130,15 @@ function App() {
         pageClosed={() => null}
         userData={userData}
         initialized={puzzleInitialized}
-        setInitialized={setPuzzleInitialized}/>
+        setInitialized={setPuzzleInitialized} />
       </Route>
       <Route path="/shop">
-        <ShopPage />
+        <ShopPage
+        sendMessage={sendMessage} />
       </Route>
       <Route exact path="/leaderboard">
-        <LeaderboardPage />
+        <LeaderboardPage 
+        sendMessage={sendMessage} />
       </Route>
     </div>
   );

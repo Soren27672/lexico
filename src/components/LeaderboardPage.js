@@ -2,13 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { globalContext } from "../globalContext";
 import Rank from "./Rank";
 
-function LeaderboardPage() {
+function LeaderboardPage({ sendMessage }) {
     const { userData } = useContext(globalContext);
     const [rankingData, setRankingData] = useState(null);
     const [formName, setFormName] = useState('');
 
     function getRankings() {
-        console.log('get rankings ran');
         fetch('http://localhost:3000/rankings')
         .then(r => r.json())
         .then(rankings => {
@@ -23,17 +22,17 @@ function LeaderboardPage() {
         e.preventDefault();
 
         if (name === '') {
-            console.log('Enter a name');
+            sendMessage('Please enter a name',3)
             return;
         }
 
         if (points === 0) {
-            console.log('Complete a game');
+            sendMessage('Complete a game first',3)
             return;
         }
 
         if (time === 0) {
-            console.log('Complete a game');
+            sendMessage('Complete a game first',3)
             return;
         }
 
@@ -42,8 +41,6 @@ function LeaderboardPage() {
             points: points,
             time: time
         })
-
-        console.log(JSON.stringify(userObj))
 
         fetch('http://localhost:3000/rankings', {
             method: "POST",
@@ -54,10 +51,11 @@ function LeaderboardPage() {
             body: userObj
         })
         .then(r => r.json())
-        .then(rank => getRankings());
+        .then(rank => {
+            getRankings();
+            sendMessage('Ranked Successfully!',3);
+        });
     }
-
-    console.log(rankingData)
 
     if (rankingData === null) return <p>Loading!</p>
 
