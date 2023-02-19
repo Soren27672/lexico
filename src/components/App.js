@@ -114,13 +114,19 @@ function App() {
 
   return (
     <div className="App">
-      { messageData === null ? null : <Message text={messageData.text} />}
-      <p>{`Points: ${userData.points.net}, Time: ${formatDuration(userData.time)}`}</p>
-      <nav>
-        <NavLink to="/puzzle">Play!</NavLink>
-        <NavLink to="/shop">Upgrade!</NavLink>
-        <NavLink to="/leaderboard">Rank!</NavLink>
-      </nav>
+      <header>
+        { messageData === null ? null : <Message text={messageData.text} />}
+        <nav>
+          <NavLink to="/puzzle">Play!</NavLink>
+          <NavLink to="/shop">Upgrade!</NavLink>
+          <NavLink to="/leaderboard">Rank!</NavLink>
+        </nav>
+        <div id="header-details">
+          <p>Your Stats »</p>
+          <p>{`Points: ${userData.points.net}`}</p>
+          <p>{`Total Game Time: ${formatDuration(userData.time)}`}</p>
+        </div>
+      </header>
       <Route exact path="/puzzle">
         <PuzzlePage
         puzzleObj={puzzle}

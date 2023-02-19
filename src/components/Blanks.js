@@ -10,7 +10,11 @@ function Blanks({ array, revealedArray }) {
         }, '')
     }
 
-    return <h1>{generateBlanks(array,revealedArray)}</h1>;
+    return (
+        <div className="blanks">
+            <h1>{generateBlanks(array,revealedArray)}</h1>
+        </div>
+    )
 }
 
 export default Blanks;

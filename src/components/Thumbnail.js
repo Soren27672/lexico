@@ -7,8 +7,10 @@ function Thumbnail({ bonus, path }) {
 
     return (
         <NavLink to={path}>
-            <img src={'/'+bonus.image} alt={bonus.name} />
-            <p>{userData.bonusData[bonus.id - 1][bonus.thumbText]}</p>
+            <div className="thumbnail">
+                <img src={'/'+bonus.image} alt={bonus.name} className="icon thumb" />
+                <p>{userData.bonusData[bonus.id - 1][bonus.thumbText]}</p>
+            </div>
         </NavLink>
     )
 }

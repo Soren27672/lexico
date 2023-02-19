@@ -21,8 +21,9 @@ function ShopPage({ sendMessage }) {
             <Route path="/shop/:bonus">
                 <ShopHighlight sendMessage={sendMessage}/>
             </Route>
+            <div id="thumbnails">
             { thumbnails }
-
+            </div>
         </div>
         
     )

@@ -122,28 +122,16 @@
   },
   "rankings": [
     {
-      "id": 1,
       "name": "Max",
-      "points": 10,
-      "time": 10000
-    },
-    {
-      "id": 2,
-      "name": "Say delay D",
-      "points": 50,
-      "time": 3600000
-    },
-    {
-      "name": "Ruta Ruta",
-      "points": 100206,
-      "time": 8000,
-      "id": 3
-    },
-    {
-      "name": "Maxalina",
       "points": 710,
       "time": 123000,
       "id": 4
+    },
+    {
+      "name": "Max",
+      "points": 99640,
+      "time": 672000,
+      "id": 5
     }
   ],
   "puzzles": [
@@ -3469,7 +3457,7 @@
       "id": 139
     },
     {
-      "string": "Nature VERSUS NURTURE",
+      "string": "NATURE VERSUS NURTURE",
       "array": [
         "N",
         "A",

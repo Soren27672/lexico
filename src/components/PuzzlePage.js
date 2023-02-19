@@ -75,10 +75,11 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
         div.current.focus();
     }
 
-    function calculateFinalValue({ value, strikes, rapidInputs, array }) {
+    function calculateFinalValue({ value, strikes, rapidInputs, lifesavers, array }) {
         const luckyLetterData = userData.bonusData[0];
-        const lifesaverData = userData.bonusData[1];
         const rapidInputData = userData.bonusData[2];
+
+        console.log(lifesavers);
 
         let returnValue = value;
 
@@ -94,8 +95,8 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
             returnValue += (rapidInputData.reward * rapidInputs);
          }
 
-         if (lifesaverData.level < strikes) {
-            returnValue *= 1 - (gameData.valueData.strike * (strikes - lifesaverData.level));
+         if (lifesavers < strikes) {
+            returnValue *= 1 - (gameData.valueData.strike * (strikes - lifesavers));
         }
 
          returnValue = Math.ceil(returnValue)
@@ -164,7 +165,8 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
 
             setPuzzleData({ ...puzzleObj,
                 finalValue: calculateFinalValue(puzzleObj),
-                revealed: newRevealed
+                revealed: newRevealed,
+                lifesavers: userData.bonusData[1].level
             });
             setInitialized(true);
         }
@@ -189,12 +191,12 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
 
     return (
         <div ref={div} id="puzzle-page" onKeyDown={handleGuess} tabIndex={-1}>
-            <small>{ puzzleData.category }</small>
+            <div id="category"><p>{ puzzleData.category }</p></div>
             <Blanks array={puzzleData.array} revealedArray={puzzleData.revealed}/>
             <Value puzzleData={puzzleData}/>
             <Strikes guesses={puzzleData.guesses}/>
-            <p>{`Time: ${formatDuration(puzzleData.time)}`}</p>
-            {puzzleData.completed ? <button onClick={newPuzzle}>Next Puzzle!</button> : null}
+            <div id="round-time"><p>{formatDuration(puzzleData.time)}</p></div>
+            {puzzleData.completed ? <div className="button-div"><button onClick={newPuzzle}>» Next Puzzle! »</button></div> : null}
             <div id="thumbnails">
                 { thumbnails }
             </div>

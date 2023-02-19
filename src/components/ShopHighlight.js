@@ -54,7 +54,7 @@ function ShopHighlight({ sendMessage }) {
 
     return (
         <div id="shop-highlight">
-            <img src={'/'+image} alt={name}/>
+            <img src={'/'+image} alt={name} className="icon large"/>
             <h1>{name}</h1>
             <p>{description}</p>
             <strong>{upgradePrice}</strong>

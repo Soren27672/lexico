@@ -1,6 +1,14 @@
 # Changelog
 
 
+### 29
+- Upon initializing a puzzle, the user's lifesavers level is stored in the puzzleData object
+    - calculateFinalValue now uses the lifesavers number stored in puzzleData where it previously used the lifesavers level stored in userData
+- The Strikes component now conditionally renders its elements based on whether or not any incorrect guesses have been made
+- Styled PuzzlePage
+    - Introduced several functionally insignificant divs in many locations
+
+
 ### 28
 - Created Message component that takes a text prop and returns a message-class div containing a \<p\> with the provided text
     - This Message component is conditionally rendered by App based on whether or not the new stateful variable ```messageData``` is null
