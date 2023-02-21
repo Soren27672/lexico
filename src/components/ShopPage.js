@@ -1,11 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Route } from "react-router-dom";
 import { globalContext } from "../globalContext";
 import ShopHighlight from "./ShopHighlight";
 import Thumbnail from "./Thumbnail";
 
 function ShopPage({ sendMessage }) {
-    const [ displayed, setDisplayed ] = useState(null);
     const { gameData } = useContext(globalContext);
 
     let thumbnails = []

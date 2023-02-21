@@ -11,7 +11,7 @@ function LeaderboardPage({ sendMessage }) {
     masks.date = 'm/d/yy';
 
     function getRankings() {
-        fetch('http://localhost:3000/rankings')
+        fetch(`${process.env.REACT_APP_URL}/rankings`)
         .then(r => r.json())
         .then(rankings => {
             rankings.sort((a,b) => (b.points / (b.time / 60000)) - (a.points / (a.time / 60000)));
@@ -46,7 +46,7 @@ function LeaderboardPage({ sendMessage }) {
             date: dateFormat(new Date(),"date")
         })
 
-        fetch('http://localhost:3000/rankings', {
+        fetch(`${process.env.REACT_APP_URL}/rankings`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

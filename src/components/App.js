@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { NavLink, Route } from "react-router-dom";
+import { NavLink, Redirect, Route } from "react-router-dom";
 import LeaderboardPage from "./LeaderboardPage";
 import PuzzlePage from "./PuzzlePage";
 import ShopPage from "./ShopPage";
@@ -34,7 +34,7 @@ function App() {
   const { gameData, userData, setUserData} = useContext(globalContext);
 
   function initialRender(){
-    fetch('http://localhost:3000/puzzles')
+    fetch(`${process.env.REACT_APP_URL}/puzzles`)
     .then(r => r.json())
     .then(json => {
       setUnusedIds(json.map(cv => cv.id));
@@ -45,7 +45,7 @@ function App() {
   }
 
   function getPuzzle() {
-    fetch(`http://localhost:3000/puzzles/${randomItem(unusedIds)}`)
+    fetch(`${process.env.REACT_APP_URL}/puzzles/${randomItem(unusedIds)}`)
     .then(r => r.json())
     .then(json => {
       setPuzzle({
@@ -156,6 +156,9 @@ function App() {
             <p>{`Total Game Time: ${formatDuration(userData.time)}`}</p>
           </div>
         </header>
+        <Route exact path="/">
+          <Redirect to="/puzzle" />
+        </Route>
         <Route exact path="/puzzle">
           <PuzzlePage
           puzzleObj={puzzle}

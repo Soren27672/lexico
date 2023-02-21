@@ -21,12 +21,17 @@
 - getRankings now sorts rankings by their point generation rate (points / time) where it previously sorted them by their total points
     - Adjusted Rank to display the rate text before the total points text to clarify what was the ranking was based on
 
+- Added Route to App for the exact path "/" which renders a Redirect component to "/puzzle"
+
 - LeaderboardPage now displays a champion based on the name at the 0 index of rankingData
+
 - Fixed improper date formatting in postScore
     - masks.date was set to "d/m/yy" instead of "m/d/yy"
 - Fixed bug where multiple Rapid Inputs could be registered between renders, allowing a user to exceed the maximum of 5
     - calculateFinalValue now multiplies the user's Rapid Input reward by the min value of rapidInputs and 5
 - Removed development console.logs
+- Implemented environmental variables
+
 - Styled LeaderboardPage, ShopPage and updated styling on PuzzlePage
 
 

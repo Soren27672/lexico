@@ -1,70 +1,24 @@
-# Getting Started with Create React App
+# Lexico
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Lexico is a word guessing game similar to Hangman and Wheel of Fortune, with the additional features of progression and ranking.
 
-## Available Scripts
+Completing puzzles awards a user with points, which can be spent purchasing and upgrading bonuses that have unique ways of increasing puzzle point rewards. Users can also view a leaderboard and submit their stats to it.
 
-In the project directory, you can run:
+# Technical
 
-### `npm start`
+Lexico is built with React and React Router v5
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The website hosts three main pages--being the puzzle, shop and leaderboard--each within their own route
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+In regards to the puzzle page, it is responsible for running the game itself--responding to user input to update the puzzle's progress and the information displayed on-screen--with a puzzle object provided to it by its parent. Within its functionality, it hosts several points of export where the progress data it has generated may be provided to its parent.
 
-### `npm test`
+The shop page provides the user with an interface to purchase upgrades. It takes the form of a list/detail layout using nested routes. It updates the screen and user progress data in response to input.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The leaderboard page retrieves data from Lexico's server for display, as well as providing a controlled form which the client can use to submit their progress data to the server.
 
-### `npm run build`
+These three page components are held in the App component, which contains the header and navigation. It is also App's \*ideal responsibility to hold and update the user's progress data. For instance, the user's current puzzle is held in state in App and is *provided* to PuzzlePage, as opposed to it being *held* in PuzzlePage itself, which is a component that is meant to run the game, *not* to contain data about any specific instance *of* the game's run.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+\* I say ideal because in Lexico as it stands, the userData and gameData state is held in a react context in an external file--not in App. This context is provided to the entire app, so when PuzzlePage and ShopPage need to read gameData or udpate userData, their access is through context, rather than a prop they receive. With more time, I would refactor the code so that either:
+    a. The context globalContext is moved into App (So that the context is created by App and provided to all its children) or
+    b. userData and gameData are held in App and provided to its children via props
+in accordance with the idea that App is the location where user data and "set up" data (such as gameData and the current puzzle) is stored

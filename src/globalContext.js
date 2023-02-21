@@ -27,7 +27,7 @@ function GlobalProvider({ children }) {
       })
 
     useEffect(() => {
-        fetch('http://localhost:3000/gameData')
+        fetch(`${process.env.REACT_APP_URL}/gameData`)
         .then(r => r.json())
         .then(json => {
             setGameData(json);
