@@ -446,7 +446,7 @@ a {
   margin-top: 2rem;
   display: grid;
   grid-template-rows: max-content auto max-content;
-  height: calc(100vh - 216px);
+  height: calc(100vh - 5em);
 }
 
 #champion {
