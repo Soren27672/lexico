@@ -71,6 +71,7 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
     }
 
     function focus() {
+        console.log(div);
         div.current.focus();
     }
 

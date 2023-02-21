@@ -31,6 +31,7 @@
     - calculateFinalValue now multiplies the user's Rapid Input reward by the min value of rapidInputs and 5
 - Removed development console.logs
 - Implemented environmental variables
+- Created new favicon and updated \<title\> tag
 
 - Styled LeaderboardPage, ShopPage and updated styling on PuzzlePage
 
