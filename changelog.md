@@ -1,6 +1,35 @@
 # Changelog
 
 
+### 30
+- Updated puzzle initializing process so that it stores the number of Lucky Letter bonuses in puzzleData object
+    - calculateFinalValue no longer determines the number of Lucky Letter bonuses itself, but refers to the number stored in puzzleData
+- Value component now has a div to contain information about the number and value of Lucky Letter bonuses
+
+- Reworked sendMessage function
+    - Previously, the Message component was rendered conditionally based on whether or not messageData was null. Now, Message is always rendered, but its CSS display property is manipulated to show or hide the element
+    - The Message component now receives a display prop, which it passes to its outermost div's display property within the object provided to its style attribute
+    - sendMessage now updates messageData's display property to "flex" upon being invoked and later resets it to "none" upon its timeout's expiration (previously it replaced the data object with null)
+
+- Created PopUpBoard, which is designed to display important text to the user, darkening and disabling the rest of the web-app until its closer button has been pressed
+    - PopUpBoard expects a data object that provides values for header, text, button and display, the first three of which are used by PopUpBoard to determine the text to be displayed in each of those areas, and the last--display--is used to set the PopUpBoard's div's CSS display property to an appropriate value (flex or none)
+    - Data regarding the state of PopUpBoard is held in state in App, and is designed to contain values for header, text, button, display, appClick and appFilter
+    - When the new function sendPopUpBoard(1,2,3) is called, the popUpBoardData's header, text and button properties are updated with the three args provided to the function. popUpBoardData's display, appClick and appFilter properties are updated to "flex", "none" and "brightness(0.75)" respectively
+    - The div within App that contains the entire web-app (except for Message and PopUpBoard) now references popUpBoardData to set its "pointer-events" and "filter" CSS properties (setting them to popUpBoardData.appClick and popUpBoardData.appFilter respectively)
+    - Upon clicking the button in PopUpBoard, its onClick attribute calls a setter function provided as a prop to set popUpBoardData's display, appClick and appFilter properties back to "flex", "auto" and "none"
+
+- getRankings now sorts rankings by their point generation rate (points / time) where it previously sorted them by their total points
+    - Adjusted Rank to display the rate text before the total points text to clarify what was the ranking was based on
+
+- LeaderboardPage now displays a champion based on the name at the 0 index of rankingData
+- Fixed improper date formatting in postScore
+    - masks.date was set to "d/m/yy" instead of "m/d/yy"
+- Fixed bug where multiple Rapid Inputs could be registered between renders, allowing a user to exceed the maximum of 5
+    - calculateFinalValue now multiplies the user's Rapid Input reward by the min value of rapidInputs and 5
+- Removed development console.logs
+- Styled LeaderboardPage, ShopPage and updated styling on PuzzlePage
+
+
 ### 29
 - Upon initializing a puzzle, the user's lifesavers level is stored in the puzzleData object
     - calculateFinalValue now uses the lifesavers number stored in puzzleData where it previously used the lifesavers level stored in userData

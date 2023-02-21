@@ -5,6 +5,14 @@ import { globalContext } from "../globalContext";
 function Value({ puzzleData }) {
     const { userData, gameData } = useContext(globalContext);
 
+    const luckyLettersDiv = (
+        <div id="lucky-letters">
+            <p>{`${puzzleData.luckyLetters} ×`}</p>
+            <img src={`/${gameData.bonusData[0].image}`} alt="Lucky Letter" className="icon mini"/>
+            <p>{`»  +${puzzleData.luckyLetters * gameData.bonusData[0].value}`}</p>
+        </div>
+    )
+
     const rapidInputsDiv = (
         <div id="rapid-inputs">
             <p>{`${puzzleData.rapidInputs} ×`}</p>
@@ -32,6 +40,7 @@ function Value({ puzzleData }) {
     return (
         <div id="value">
             <div id="initial"><p>{puzzleData.value}</p></div>
+            {puzzleData.luckyLetters > 0 ? luckyLettersDiv : null}
             {puzzleData.rapidInputs > 0 ? rapidInputsDiv : null}
             {puzzleData.strikes > 0 ? strikesDiv : null}
             {(puzzleData.strikes > 0) && (puzzleData.lifesavers > 0) ? lifesaversDiv : null}

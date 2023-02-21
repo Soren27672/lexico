@@ -8,6 +8,19 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: fit-content;
+  animation: bg-pulse 15s ease-in-out infinite;
+}
+
+@keyframes bg-pulse {
+  0% { background-color: var(--black); }
+  50% { background-color: var(--blackblue); }
+  100% { background-color: var(--black); }
+}
+
+@keyframes title-pulse {
+  0% { color: var(--lightblue); }
+  50% { color: var(--whiteblue); }
+  100% { color: var(--lightblue); }
 }
 
 code {
@@ -17,6 +30,7 @@ code {
 
 :root {
   --black: #0E171B;
+  --blackblue: #112227;
   --darkblue: #295463;
   --midblue: #406877;
   --lightblue: #9ddcf3;
@@ -31,6 +45,92 @@ code {
   outline: 0;
   outline-color: transparent;
   outline-style: none;
+}
+
+#message {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 2rem;
+  left: 50%;
+  transform: translate(-50%);
+  max-width: 50ch;
+  height: fit-content;
+  border-radius: 1rem;
+
+  background-color: var(--midblue);
+  color: var(--whiteblue);
+}
+
+#message p {
+  margin: 1em;
+  font-size: 1.25rem;
+}
+
+#pop-up-board {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 46ch;
+  height: fit-content;
+  padding: 1.75em;
+  border-radius: 1rem;
+  z-index: 100;
+
+  background-color: var(--midblue);
+  color: var(--whiteblue);
+}
+
+#pop-up-board h1 {
+  font-size: 2.5rem;
+  line-height: 1.5em;
+  white-space: break-spaces;
+  margin: 0.5em 0px 0.25em 0px;
+  color: lightblue;
+}
+
+#pop-up-board p {
+  font-size: 1.25rem;
+  line-height: 1.5em;
+  text-align: justify;
+  white-space: break-spaces;
+  margin: 1em 0px;
+  color: lightblue;
+}
+
+#pop-up-board button {
+  margin: 1.5rem;
+  padding: 0.5em;
+  font-size: 1.25rem;
+  border-radius: 1.75rem;
+  border: none;
+
+  background-color: var(--whiteblue);
+  color: var(--darkblue);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#pop-up-board button:hover {
+  filter: brightness(0.75);
+}
+
+
+
+
+
+nav>h1 {
+  font-size: 1.9rem;
+  margin: 0px 1rem 0.1rem 1rem;
+  background-color: var(--darkblue);
+  animation: title-pulse 15s ease-in-out infinite;
+  display: inline-block;
 }
 
 header {
@@ -51,21 +151,29 @@ header p {
 }
 
 nav {
+  display: flex;
+  align-items: center;
   background-color: var(--darkblue);
   text-align: center;
   font-size: 1rem;
-  margin: 1em 0px;
 }
 
 nav a {
   color: var(--lightblue);
   padding: 1em;
+  cursor: pointer;
 }
 
 nav a.active {
   color: var(--whiteblue);
   background-color: var(--midblue);
 }
+
+
+
+
+
+
 
 #puzzle-page {
   margin-top: 5rem;
@@ -102,7 +210,7 @@ nav a.active {
 
 .blanks h1 {
   display: block;
-  padding: 1em;
+  padding: 0.75em;
   margin: 0px;
 
   font-size: 2.75em;
@@ -153,7 +261,7 @@ img.large {
   width: fit-content;
 }
 
-#strikes, #lifesavers, #rapid-inputs {
+#strikes, #lifesavers, #rapid-inputs, #lucky-letters {
   background-color: var(--darkblue);
   display: flex;
   padding: 0.3125em;
@@ -194,7 +302,7 @@ img.large {
 }
 
 #puzzle-page button:hover {
-  filter: brightness(0.7);
+  filter: brightness(0.75);
   cursor: pointer;
 }
 
@@ -209,6 +317,14 @@ img.large {
   border-radius: 2rem;
   padding: 1em;
   margin: 1em;
+}
+
+.thumbnail:hover {
+  background-color: var(--darkblue);
+  border-radius: 2rem;
+  padding: 1em;
+  margin: 1em;
+  filter: brightness(0.75);
 }
 
 .thumbnail p {
@@ -248,4 +364,178 @@ a {
 #incorrect-guesses img {
   margin: 0px 0.5rem 0px 0.5rem;
   filter: invert(42%) sepia(19%) saturate(1300%) hue-rotate(309deg) brightness(95%) contrast(79%);
+}
+
+
+
+
+
+#shop-page>h1 {
+  text-align: center;
+  font-size: 4rem;
+  margin: 5rem 0px;
+  color: var(--whiteblue);
+}
+
+.shop-highlight {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--darkblue);
+  margin: 5rem auto;
+  width: 40%;
+  padding: 1rem;
+  border-radius: 2rem;
+}
+
+.shop-highlight .details {
+  display: flex;
+  justify-content: center;
+}
+
+.shop-highlight .image {
+  background-color: var(--black);
+  width: fit-content;
+  padding: 1rem;
+  border-radius: 2rem;
+  margin: 1rem 0.5rem;
+}
+
+.shop-highlight .words {
+  margin: 1rem 0.5rem;
+}
+
+.shop-highlight p {
+  font-size: 1.25rem;
+  margin: 0.5rem, 0px;
+}
+
+.shop-highlight h1 {
+  margin: 0.5rem 0px;
+  color: var(--whiteblue);
+}
+
+.shop-highlight .upgrade-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shop-highlight .upgrade-details button {
+  margin: 1rem;
+  padding: 0.5em;
+  font-size: 1.25rem;
+  border-radius: 1.75rem;
+  border: none;
+
+  background-color: var(--whiteblue);
+  color: var(--darkblue);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.shop-highlight .upgrade-details button:hover {
+  filter: brightness(0.75);
+}
+
+
+
+
+
+
+#leaderboard-page {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-rows: max-content auto max-content;
+  height: 92vh;
+}
+
+#champion {
+  display: flex;
+  justify-content: center;
+  margin: 2rem auto;
+}
+
+#champion .words {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#champion h1 {
+  margin: 0px;
+  color: var(--whiteblue)
+}
+
+#champion p {
+  font-size: 1.1rem;
+  color: var(--lightblue)
+}
+
+#rankings-div {
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.rank {
+  background-color: var(--darkblue);
+  margin: 0.5em auto;
+  display: flex;
+  justify-content: space-between;
+  width: 75%;
+  border-radius: 1em;
+}
+
+.rank strong, .rank p, .rank em {
+  margin: 0.5em 1em;
+}
+
+#your-rank-div {
+  bottom: 0px;
+  width: 100%;
+  background-color: var(--blackblue);
+}
+
+#your-rank-div .rank {
+  background-color: var(--midblue);
+  margin-top: 1rem;
+}
+
+#your-rank-div .rank * {
+  color: var(--whiteblue);
+}
+
+#your-rank-div p {
+  text-align: center;
+}
+
+[type=text] {
+  font-size: 1.25rem;
+  border-radius: 1em;
+  border: none;
+  text-align: center;
+  padding: 0.5em;
+  display: block;
+  margin: 0.5em auto;
+}
+
+#leaderboard-page [type=submit] {
+  background-color: var(--darkblue);
+  color: var(--lightblue);
+  font-size: 1.25rem;
+
+  display: block;
+  padding: 0.5em;
+  border-radius: 1.75em;
+  font-weight: bold;
+  margin: 0.5em auto;
+  border: none;
+}
+
+#leaderboard-page [type=submit]:hover {
+  filter: brightness(0.75);
+  cursor: pointer;
 }

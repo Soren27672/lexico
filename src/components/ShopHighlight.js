@@ -53,13 +53,21 @@ function ShopHighlight({ sendMessage }) {
     }
 
     return (
-        <div id="shop-highlight">
-            <img src={'/'+image} alt={name} className="icon large"/>
-            <h1>{name}</h1>
-            <p>{description}</p>
-            <strong>{upgradePrice}</strong>
-            <button onClick={handleUpgradeClick}>{buttonText}</button>
-            <em>{userBonusData.level < limit ? `(${nextValue}${nextValue === 1 ? unit.singular : unit.plural})` : '' }</em>
+        <div className="shop-highlight">
+            <div className="details">
+                <div className="image">
+                    <img src={'/'+image} alt={name} className="icon large"/>
+                </div>
+                <div className="words">
+                    <h1>{name}</h1>
+                    <p>{description}</p>
+                </div>
+            </div>
+            <div className="upgrade-details">
+                <strong>{"$" + upgradePrice}</strong>
+                <button onClick={handleUpgradeClick}>{buttonText}</button>
+                <em>{userBonusData.level < limit ? `(${nextValue}${nextValue === 1 ? unit.singular : unit.plural})` : '' }</em>
+            </div>
         </div>
     )
 }

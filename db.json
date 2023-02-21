@@ -1,5 +1,10 @@
 {
   "gameData": {
+    "info": {
+      "header": "Welcome to Lexico!",
+      "description": "Lexico is a word guessing game similar to Hangman and Wheel of Fortune. In each round, you'll be given an array of blanks representing a hidden word or phrase. Guess letters with your keyboard one by one to reveal them in the puzzle. Once you've revealed all the letters, you'll be awarded points based on how difficult the puzzle was. But be careful, guessing the wrong letter will reduce your reward!\n\nOnce you've gained enough points, head to the shop to purchase and upgrade bonuses that can help you get more points out of each puzzle.\n\nFinally, post your score to the leaderboard to compete for the title of Lexico Champion!",
+      "button": "Lex Go!"
+    },
     "valueData": {
       "base": 50,
       "strike": 0.2,
@@ -123,15 +128,10 @@
   "rankings": [
     {
       "name": "Max",
-      "points": 710,
-      "time": 123000,
-      "id": 4
-    },
-    {
-      "name": "Max",
       "points": 99640,
       "time": 672000,
-      "id": 5
+      "date": "2/19/23",
+      "id": 1
     }
   ],
   "puzzles": [
@@ -1973,7 +1973,7 @@
         "I",
         "E"
       ],
-      "category": "food",
+      "category": "Food",
       "id": 79
     },
     {

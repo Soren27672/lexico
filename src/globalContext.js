@@ -6,9 +6,9 @@ function GlobalProvider({ children }) {
     const [ gameData, setGameData ] = useState(null)
     const [userData, setUserData] = useState({
         points: {
-          gross: 1000,
+          gross: 0,
           spent: 0,
-          net: 1000
+          net: 0
         },
         bonusData: [
             {
@@ -55,21 +55,21 @@ function GlobalProvider({ children }) {
             }
           })
         }
-    
-        const correctRapidInputReward = Math.ceil(gameData.bonusData[2].recursion.base * (gameData.bonusData[2].recursion.growthRate ** userData.bonusData[2].level));
-        if (userData.bonusData[2].reward !== correctRapidInputReward) {
-            /* console.log('ran :',userData.bonusData[2].reward,correctRapidInputReward) */
-            const newBonusArray = userData.bonusData.map((bonus,index) => index === 2 ? {...bonus, reward: correctRapidInputReward} : bonus);
-            setUserData(data => {
-                return {...data,
-                    bonusData: newBonusArray
-                }
-            })
+        
+        if (userData.bonusData[2].level > 0) {
+            const correctRapidInputReward = Math.ceil(gameData.bonusData[2].recursion.base * (gameData.bonusData[2].recursion.growthRate ** (userData.bonusData[2].level - 1)));
+            if (userData.bonusData[2].reward !== correctRapidInputReward) {
+                const newBonusArray = userData.bonusData.map((bonus,index) => index === 2 ? {...bonus, reward: correctRapidInputReward} : bonus);
+                setUserData(data => {
+                    return {...data,
+                        bonusData: newBonusArray
+                    }
+                })
+            }
         }
 
         const correctLuckyLetter = gameData.bonusData[0].sequence[userData.bonusData[0].level];
         if (userData.bonusData[0].letter !== correctLuckyLetter) {
-            /* console.log('ran :',userData.bonusData[2].reward,correctRapidInputReward) */
             const newBonusArray = userData.bonusData.map((bonus,index) => index === 0 ? {...bonus, letter: correctLuckyLetter} : bonus);
             setUserData(data => {
                 return {...data,

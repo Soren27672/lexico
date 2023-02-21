@@ -8,6 +8,7 @@ import randomItem from 'random-item';
 import formatDuration from "format-duration";
 import { globalContext } from "../globalContext";
 import Message from "./Message";
+import PopUpBoard from "./PopUpBoard";
 
 function App() {
   const [initialized, setInitialized] = useState({
@@ -17,7 +18,19 @@ function App() {
   const [puzzle, setPuzzle] = useState(null);
   const [puzzleInitialized, setPuzzleInitialized] = useState(false);
   const [unusedIds, setUnusedIds] = useState([]);
-  const [messageData, setMessageData] = useState(null);
+  const [messageData, setMessageData] = useState({
+    text: "Lucky You!",
+    timeout: null,
+    display: "none"
+  });
+  const [popUpBoardData, setPopUpBoardData] = useState({
+    header: "Lucky You!",
+    text: "You're in luck!",
+    button: "Let's Go!",
+    display: "none",
+    appFilter: "none",
+    appClick: "auto"
+  });
   const { gameData, userData, setUserData} = useContext(globalContext);
 
   function initialRender(){
@@ -83,10 +96,25 @@ function App() {
     if (messageData !== null) clearTimeout(messageData.timeout);
 
     const timeout = setTimeout(() => {
-      setMessageData(null);
+      setMessageData(data => {
+        return {...data,
+          display: "none"
+        }
+      });
     },duration * 1000)
 
-    setMessageData({ text: text, timeout: timeout });
+    setMessageData({ text: text, timeout: timeout, display: "flex" });
+  }
+
+  function sendPopUpBoard(header, text, button) {
+    setPopUpBoardData({
+      header: header,
+      text: text,
+      button: button,
+      display: "flex",
+      appFilter: "brightness(0.75)",
+      appClick: "none"
+    })
   }
 
   useEffect(initialRender,[]);
@@ -96,11 +124,8 @@ function App() {
       if(!initialized[key]) return;
     }
     getPuzzle();
+    sendPopUpBoard(gameData.info.header,gameData.info.description,gameData.info.button);
   },[initialized])
-
-  useEffect(() => {
-    //console.log(puzzle);
-  },[puzzle])
 
   useEffect(() => {
     if ((gameData !== null) && (initialized.gameData === false)) setInitialized(current => {
@@ -113,40 +138,45 @@ function App() {
   if(puzzle === null) return <h1>Loading!</h1>
 
   return (
-    <div className="App">
-      <header>
-        { messageData === null ? null : <Message text={messageData.text} />}
-        <nav>
-          <NavLink to="/puzzle">Play!</NavLink>
-          <NavLink to="/shop">Upgrade!</NavLink>
-          <NavLink to="/leaderboard">Rank!</NavLink>
-        </nav>
-        <div id="header-details">
-          <p>Your Stats »</p>
-          <p>{`Points: ${userData.points.net}`}</p>
-          <p>{`Total Game Time: ${formatDuration(userData.time)}`}</p>
-        </div>
-      </header>
-      <Route exact path="/puzzle">
-        <PuzzlePage
-        puzzleObj={puzzle}
-        handlePuzzleUpdated={updatePuzzle}
-        newPuzzle={getPuzzle}
-        handleCompleted={puzzleCompleted}
-        pageClosed={() => null}
-        userData={userData}
-        initialized={puzzleInitialized}
-        setInitialized={setPuzzleInitialized} />
-      </Route>
-      <Route path="/shop">
-        <ShopPage
-        sendMessage={sendMessage} />
-      </Route>
-      <Route exact path="/leaderboard">
-        <LeaderboardPage 
-        sendMessage={sendMessage} />
-      </Route>
-    </div>
+    <>
+    <Message text={messageData.text} display={messageData.display}/>
+    <PopUpBoard data={popUpBoardData} setData={setPopUpBoardData}/>
+      <div className="App" style={ { pointerEvents: popUpBoardData.appClick, filter: popUpBoardData.appFilter}}>
+        <header>
+          <nav>
+            <h1>Lexico</h1>
+            <NavLink to="/puzzle">Play!</NavLink>
+            <NavLink to="/shop">Upgrade!</NavLink>
+            <NavLink to="/leaderboard">Rank!</NavLink>
+            <a onClick={() => sendPopUpBoard(gameData.info.header,gameData.info.description,gameData.info.button)}>Help!</a>
+          </nav>
+          <div id="header-details">
+            <p>Your Stats »</p>
+            <p>{`Points: ${userData.points.net}`}</p>
+            <p>{`Total Game Time: ${formatDuration(userData.time)}`}</p>
+          </div>
+        </header>
+        <Route exact path="/puzzle">
+          <PuzzlePage
+          puzzleObj={puzzle}
+          handlePuzzleUpdated={updatePuzzle}
+          newPuzzle={getPuzzle}
+          handleCompleted={puzzleCompleted}
+          pageClosed={() => null}
+          userData={userData}
+          initialized={puzzleInitialized}
+          setInitialized={setPuzzleInitialized} />
+        </Route>
+        <Route path="/shop">
+          <ShopPage
+          sendMessage={sendMessage} />
+        </Route>
+        <Route exact path="/leaderboard">
+          <LeaderboardPage 
+          sendMessage={sendMessage} />
+        </Route>
+      </div>
+    </>
   );
 }
 

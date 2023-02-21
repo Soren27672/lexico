@@ -1,3 +1,4 @@
+import dateFormat, { masks } from "dateformat";
 import React, { useContext, useEffect, useState } from "react";
 import { globalContext } from "../globalContext";
 import Rank from "./Rank";
@@ -7,11 +8,13 @@ function LeaderboardPage({ sendMessage }) {
     const [rankingData, setRankingData] = useState(null);
     const [formName, setFormName] = useState('');
 
+    masks.date = 'm/d/yy';
+
     function getRankings() {
         fetch('http://localhost:3000/rankings')
         .then(r => r.json())
         .then(rankings => {
-            rankings.sort((a,b) => b.points - a.points);
+            rankings.sort((a,b) => (b.points / (b.time / 60000)) - (a.points / (a.time / 60000)));
             setRankingData(rankings);
         });
     }
@@ -39,7 +42,8 @@ function LeaderboardPage({ sendMessage }) {
         const userObj = JSON.stringify({
             name: name,
             points: points,
-            time: time
+            time: time,
+            date: dateFormat(new Date(),"date")
         })
 
         fetch('http://localhost:3000/rankings', {
@@ -62,23 +66,36 @@ function LeaderboardPage({ sendMessage }) {
     const rankings = [];
 
     for (let i = 0; i < Math.min(rankingData.length, 50); ++i) {
-        rankings.push(<Rank userObj={rankingData[i]} key={i} />)
+        rankings.push(<Rank userObj={rankingData[i]} key={i} rank={i+1}/>)
     }
 
+    const yourRankObj = {
+        name: "you",
+        points: userData.points.gross,
+        time: userData.time,
+        date: dateFormat(new Date(),"date")
+    }
 
     return (
         <div id="leaderboard-page">
+            <div id="champion">
+                <img src="/Laurel.png" alt="Laurel" className="icon large"/>
+                <div className="words">
+                    <h1>{rankingData[0].name}</h1>
+                    <p>Reigning Lexico champion</p>
+                </div>
+                <img src="/Laurel.png" alt="Laurel" className="icon large" style={{transform: "scaleX(-1)"}}/>
+            </div>
             <div id="rankings-div">
                 {rankings}
             </div>
             <div id="your-rank-div">
-                { userData.time > 0 ? <Rank userObj={{ name: 'You', points: userData.points.gross, time: userData.time}} /> : <p>Complete a puzzle to see your stats</p> } 
-            </div>
-            <form onSubmit={(e) => postScore(formName,userData.points.gross,userData.time,e)}>
+                { userData.time > 0 ? <Rank userObj={yourRankObj} rank="???"/> : <p>Complete a puzzle to see your stats and submit your score</p> } 
+                <form onSubmit={(e) => postScore(formName,userData.points.gross,userData.time,e)}>
                 <input type="text" placeholder="enter a name" onChange={(e) => setFormName(e.target.value)} value={formName}/>
                 <input type="submit" value="Submit Your Score!" />
             </form>
-            
+            </div>
         </div>
     )
 }

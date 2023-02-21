@@ -17,7 +17,7 @@ function ShopPage({ sendMessage }) {
 
     return (
         <div id="shop-page">
-            <h1>Let's make some upgrades!</h1>
+            <Route exact path="/shop"><h1>Select a Bonus to see its details!</h1></Route>
             <Route path="/shop/:bonus">
                 <ShopHighlight sendMessage={sendMessage}/>
             </Route>

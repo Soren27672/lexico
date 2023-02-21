@@ -15,7 +15,6 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
 
     function handleGuess(e) {
         if ((e.key.length !== 1) || (e.key.toLowerCase() === e.key.toUpperCase())) {
-            console.log('Invalid Character');
             return
         }
 
@@ -75,33 +74,24 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
         div.current.focus();
     }
 
-    function calculateFinalValue({ value, strikes, rapidInputs, lifesavers, array }) {
-        const luckyLetterData = userData.bonusData[0];
+    function calculateFinalValue({ value, strikes, rapidInputs, lifesavers, luckyLetters }) {
         const rapidInputData = userData.bonusData[2];
-
-        console.log(lifesavers);
 
         let returnValue = value;
 
-        if (luckyLetterData.level > 0) {
-            array.forEach(letter => {
-                if (letter === luckyLetterData.letter) {
-                    returnValue += gameData.bonusData[0].value;
-                }
-             });
+        returnValue += luckyLetters * gameData.bonusData[0].value;
+
+        if (rapidInputData.level > 0) {
+            returnValue += (rapidInputData.reward * Math.min(rapidInputs,5));
         }
 
-         if (rapidInputData.level > 0) {
-            returnValue += (rapidInputData.reward * rapidInputs);
-         }
-
-         if (lifesavers < strikes) {
+        if (lifesavers < strikes) {
             returnValue *= 1 - (gameData.valueData.strike * (strikes - lifesavers));
         }
 
-         returnValue = Math.ceil(returnValue)
+        returnValue = Math.ceil(returnValue)
 
-         return returnValue;
+        return returnValue;
     }
 
     function instancesOfValueInObject(object, value) {
@@ -158,15 +148,19 @@ function PuzzlePage({ puzzleObj, handlePuzzleUpdated, handleCompleted, newPuzzle
 
     useEffect(() => {
         if (initialized === false) {
-            console.log(puzzleObj);
+            let luckyLetters = 0;
             const newRevealed = puzzleObj.revealed.map((blank,index) => {
-                return puzzleObj.array[index] === userData.bonusData[0].letter ? true : blank
+                if (puzzleObj.array[index] === userData.bonusData[0].letter) {
+                    ++luckyLetters;
+                    return true
+                } else return blank
             })
 
             setPuzzleData({ ...puzzleObj,
                 finalValue: calculateFinalValue(puzzleObj),
                 revealed: newRevealed,
-                lifesavers: userData.bonusData[1].level
+                lifesavers: userData.bonusData[1].level,
+                luckyLetters: luckyLetters
             });
             setInitialized(true);
         }
